@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Heza Coordination | Coordinating Life's Transitions With Care</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Nunito:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* ── Page-specific styles for index.html ── */
+    :root {
+      --primary-blue: #002147;
+      --light-blue: #e8f0fe;
+      --accent-blue: #3a7bd5;
+
+      --ff-body: 'Nunito', system-ui, sans-serif;
+    }
+
+    /* Hero Carousel */
+    .hero-carousel { position:relative; height:100vh; width:100%; overflow:hidden; }
+    .carousel-slides { height:100%; position:relative; }
+    .carousel-slide { position:absolute; top:0; left:0; width:100%; height:100%; opacity:0; transition:opacity 1s ease; background-size:cover; background-position:center; }
+    .carousel-slide.active { opacity:1; }
+    .carousel-slide .slide-overlay { position:absolute; inset:0; background:rgba(0,0,0,0.58); display:flex; align-items:center; justify-content:center; text-align:center; }
+    .slide-content { max-width: 860px; padding: 0 24px; z-index:2; animation: fadeInUp 0.9s ease-out both; }
+    .slide-content h1 { font-family: var(--ff-body); font-size:clamp(2.4rem,5vw,4rem); color:#fff; margin-bottom:18px; font-weight:700; line-height:1.1; text-shadow:0 2px 12px rgba(0,0,0,0.35); }
+    .slide-content p { font-size:1.15rem; color:rgba(255,255,255,0.88); margin-bottom:36px; line-height:1.7; }
+    .hero-btns { display:flex; justify-content:center; gap:16px; flex-wrap:wrap; }
+    .hero-btns .btn { min-width:210px; font-size:1rem; }
+
+    .carousel-controls { position:absolute; bottom:36px; left:0; width:100%; display:flex; justify-content:center; z-index:10; }
+    .carousel-dots { display:flex; gap:9px; }
+    .carousel-dot { width:10px; height:10px; border-radius:50%; background:rgba(255,255,255,0.45); cursor:pointer; transition:all 0.3s; }
+    .carousel-dot.active { background:#fff; transform:scale(1.25); }
+    .carousel-nav { position:absolute; top:50%; transform:translateY(-50%); width:100%; display:flex; justify-content:space-between; padding:0 28px; z-index:10; }
+    .carousel-nav button { background:rgba(255,255,255,0.18); color:#fff; border:none; width:48px; height:48px; border-radius:50%; cursor:pointer; font-size:1.1rem; transition:all 0.3s; display:flex; align-items:center; justify-content:center; backdrop-filter:blur(4px); }
+    .carousel-nav button:hover { background:rgba(255,255,255,0.28); transform:scale(1.1); }
+
+    .slide-1 { background-image:url('/images/img1.png'); }
+    .slide-2 { background-image:url('/images/img2.png'); }
+    .slide-3 { background-image:url('/images/img3.png'); }
+    .slide-4 { background-image:url('/images/img4.png'); }
+    .slide-5 { background-image:url('/images/img5.png'); }
+
+    /* About */
+    .about { background:#f8f9fc; padding:100px 0; }
+    .about-content { max-width:780px; }
+    .about-text h2 { font-family:'Nunito',serif; font-size:2.2rem; color:#002147; margin-bottom:22px; line-height:1.2; }
+    .about-text p { font-size:1rem; line-height:1.85; margin-bottom:18px; color:#454c5a; }
+    .about-text .intro-highlight { font-size:1.08rem; font-weight:500; color:#002147; border-left:4px solid #3a7bd5; padding-left:20px; margin:24px 0; font-style:italic; line-height:1.75; }
+
+    /* ═══ DIAGNOSTIC SECTION ═══ */
+    .diagnostic { background: #f0f4fa; padding: 100px 0; }
+    .diag-card { background:#fff; border-radius:20px; box-shadow:0 12px 48px rgba(0,33,71,0.1); overflow:hidden; }
+
+    /* Form panel */
+    .diag-form-panel { padding: 52px 56px; }
+    .diag-intro { margin-bottom:44px; }
+    .diag-intro .eyebrow { font-size:0.72rem; font-weight:700; letter-spacing:2.5px; text-transform:uppercase; color:#3a7bd5; display:block; margin-bottom:10px; }
+    .diag-intro h3 { font-family:'Nunito',sans-serif; font-size:1.75rem; color:#002147; margin:0 0 10px; }
+    .diag-intro p { color:#64748b; font-size:0.95rem; line-height:1.7; margin:0; }
+    .diag-categories { display:grid; grid-template-columns:1fr 1fr; gap:36px 48px; margin-bottom:40px; }
+    .diag-cat-block { }
+    .diag-cat-heading { display:flex; align-items:center; gap:10px; margin-bottom:20px; padding-bottom:10px; border-bottom:2px solid #e8f0fe; }
+    .diag-cat-heading .cat-icon { font-size:1.25rem; }
+    .diag-cat-heading h4 { font-family:'Nunito',sans-serif; font-size:0.95rem; font-weight:700; color:#002147; margin:0; letter-spacing:0.5px; text-transform:uppercase; }
+    .diag-question { margin-bottom:22px; }
+    .diag-question label { display:block; font-size:0.88rem; font-weight:500; color:#374151; margin-bottom:11px; line-height:1.5; }
+    .scale-row { display:grid; grid-template-columns:repeat(4,1fr); gap:6px; }
+    .scale-btn {
+      border: 1.5px solid #cbd5e1; background:#fff; color:#94a3b8;
+      border-radius:8px; padding:8px 4px; font-family:'Nunito',sans-serif;
+      font-size:0.75rem; font-weight:600; cursor:pointer; text-align:center;
+      transition:all 0.22s ease; line-height:1.3;
+    }
+    .scale-btn:hover { border-color:#3a7bd5; color:#3a7bd5; background:#f0f7ff; }
+    .scale-btn.active {
+      background:linear-gradient(135deg,#002147,#3a7bd5);
+      border-color:transparent; color:#fff;
+      box-shadow:0 4px 12px rgba(58,123,213,0.35);
+      transform:translateY(-1px);
+    }
+    .scale-btn .sb-num { display:block; font-size:1rem; font-weight:700; margin-bottom:2px; }
+    .scale-btn .sb-label { display:block; font-size:0.68rem; font-weight:500; opacity:0.85; }
+    .diag-submit-row { text-align:center; }
+    .diag-submit {
+      background:linear-gradient(135deg,#002147 0%,#3a7bd5 100%);
+      color:#fff; border:none; border-radius:10px; padding:16px 48px;
+      font-family:'Nunito',sans-serif; font-size:1rem; font-weight:700;
+      cursor:pointer; transition:all 0.3s ease; letter-spacing:0.3px;
+      box-shadow:0 6px 20px rgba(0,33,71,0.22); display:inline-flex; align-items:center; gap:10px;
+    }
+    .diag-submit:hover { transform:translateY(-2px); box-shadow:0 10px 28px rgba(0,33,71,0.3); }
+    .diag-submit:disabled { opacity:0.45; cursor:not-allowed; transform:none; }
+    .diag-submit-note { margin-top:10px; font-size:0.78rem; color:#94a3b8; }
+
+    /* Results panel */
+    .diag-results-panel {
+      display:none; padding:52px 56px;
+      border-top:1px solid #e8f0fe; background:linear-gradient(180deg,#fafcff 0%,#fff 100%);
+    }
+    .diag-results-panel.visible { display:block; animation:resultsFadeIn 0.6s ease both; }
+    @keyframes resultsFadeIn { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+    .results-grid { display:grid; grid-template-columns:280px 1fr; gap:48px; align-items:start; }
+    .results-left { }
+    .score-ring-wrap { display:flex; flex-direction:column; align-items:center; margin-bottom:32px; }
+    .score-ring-wrap svg { overflow:visible; }
+    .score-ring-track { fill:none; stroke:#e8f0fe; stroke-width:10; }
+    .score-ring-fill { fill:none; stroke-width:10; stroke-linecap:round; stroke:#3a7bd5; transition:stroke-dashoffset 1.2s cubic-bezier(0.4,0,0.2,1); }
+    .score-ring-text-wrap { text-align:center; margin-top:16px; }
+    .score-pct { font-family:'Cormorant Garamond',serif; font-size:3rem; font-weight:700; color:#002147; display:block; line-height:1; }
+    .score-label-verdict { font-family:'Nunito',sans-serif; font-size:0.82rem; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; margin-top:4px; display:block; }
+    .verdict-early { color:#ef4444; }
+    .verdict-developing { color:#f59e0b; }
+    .verdict-ontrack { color:#3b82f6; }
+    .verdict-prepared { color:#10b981; }
+    .cat-bars { margin-top:4px; }
+    .cat-bar-item { margin-bottom:14px; }
+    .cat-bar-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:5px; }
+    .cat-bar-name { font-size:0.82rem; font-weight:600; color:#374151; }
+    .cat-bar-score { font-size:0.82rem; font-weight:700; color:#002147; }
+    .cat-bar-track { height:7px; background:#e8f0fe; border-radius:4px; overflow:hidden; }
+    .cat-bar-fill { height:100%; border-radius:4px; background:linear-gradient(90deg,#3a7bd5,#5b96f7); transition:width 1s cubic-bezier(0.4,0,0.2,1); }
+    .cat-bar-fill.weak { background:linear-gradient(90deg,#f59e0b,#fbbf24); }
+    .cat-bar-fill.critical { background:linear-gradient(90deg,#ef4444,#f87171); }
+    .results-right { }
+    .chart-heading { font-family:'Nunito',sans-serif; font-size:0.8rem; font-weight:700; text-transform:uppercase; letter-spacing:1.5px; color:#94a3b8; text-align:center; margin-bottom:16px; }
+    #diagChart { display:block; width:100% !important; max-width:380px; height:auto !important; margin:0 auto; }
+    .recs-panel { margin-top:40px; padding-top:36px; border-top:1px solid #e8f0fe; }
+    .recs-panel h4 { font-family:'Nunito',sans-serif; font-size:0.8rem; font-weight:700; text-transform:uppercase; letter-spacing:1.5px; color:#94a3b8; margin:0 0 18px; }
+    .recs-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:16px; margin-bottom:28px; }
+    .rec-card {
+      border:1.5px solid #e8f0fe; border-radius:14px; padding:20px 20px 16px;
+      display:flex; flex-direction:column; gap:14px; background:#fafcff;
+      transition:box-shadow 0.2s ease;
+    }
+    .rec-card:hover { box-shadow:0 6px 24px rgba(0,33,71,0.09); }
+    .rec-card.primary { border-color:#3a7bd5; background:#f0f7ff; }
+    .rec-card-top { display:flex; align-items:flex-start; gap:14px; }
+    .rec-icon { font-size:1.55rem; flex-shrink:0; margin-top:2px; }
+    .rec-body { flex:1; }
+    .rec-body h5 { font-family:'Nunito',sans-serif; font-size:0.92rem; font-weight:700; color:#002147; margin:0 0 5px; line-height:1.3; }
+    .rec-body p { font-size:0.79rem; color:#64748b; margin:0; line-height:1.55; }
+    .rec-badge { display:inline-block; font-size:0.62rem; font-weight:700; letter-spacing:1px; text-transform:uppercase; background:#3a7bd5; color:#fff; border-radius:3px; padding:2px 7px; margin-top:6px; }
+    .rec-card-actions { display:flex; gap:8px; }
+    .rec-btn-book {
+      flex:1; background:linear-gradient(135deg,#002147,#3a7bd5); color:#fff;
+      border:none; border-radius:8px; padding:9px 14px;
+      font-family:'Nunito',sans-serif; font-size:0.76rem; font-weight:700;
+      cursor:pointer; transition:all 0.22s ease; text-align:center;
+      box-shadow:0 3px 10px rgba(0,33,71,0.18);
+    }
+    .rec-btn-book:hover { transform:translateY(-1px); box-shadow:0 5px 16px rgba(0,33,71,0.28); }
+    .rec-btn-view {
+      flex:1; background:transparent; color:#3a7bd5;
+      border:1.5px solid #3a7bd5; border-radius:8px; padding:9px 14px;
+      font-family:'Nunito',sans-serif; font-size:0.76rem; font-weight:700;
+      cursor:pointer; transition:all 0.22s ease; text-align:center;
+      text-decoration:none; display:flex; align-items:center; justify-content:center; gap:5px;
+    }
+    .rec-btn-view:hover { background:#f0f7ff; }
+    .diag-cta-row { display:flex; gap:12px; flex-wrap:wrap; align-items:center; margin-top:8px; }
+    .diag-tool-link {
+      display:inline-flex; align-items:center; gap:7px;
+      background:none; border:1.5px solid #cbd5e1; color:#64748b;
+      border-radius:8px; padding:11px 22px;
+      font-family:'Nunito',sans-serif; font-size:0.88rem; font-weight:600;
+      cursor:pointer; transition:all 0.22s ease; text-decoration:none;
+    }
+    .diag-tool-link:hover { border-color:#3a7bd5; color:#3a7bd5; }
+    .verdict-msg { font-size:0.9rem; color:#64748b; line-height:1.7; margin:12px 0 0; padding:14px 18px; background:#f8faff; border-left:3px solid #3a7bd5; border-radius:0 8px 8px 0; }
+
+    @media(max-width:992px) {
+      .diag-categories { grid-template-columns:1fr; gap:28px; }
+      .results-grid { grid-template-columns:1fr; gap:32px; }
+      .diag-form-panel, .diag-results-panel { padding:36px 28px; }
+    }
+    @media(max-width:768px) {
+      .scale-btn .sb-label { display:none; }
+      .scale-btn { padding:10px 4px; }
+    }
+
+    /* Services */
+    .services { padding:100px 0; background:#fff; }
+    .section-title { text-align:center; margin-bottom:55px; }
+    .section-title h2 { font-family:'Nunito',serif; font-size:2.5rem; color:#002147; position:relative; display:inline-block; padding-bottom:14px; }
+    .section-title h2:after { content:''; position:absolute; bottom:0; left:50%; transform:translateX(-50%); width:60px; height:3px; background:#3a7bd5; border-radius:2px; }
+    .section-title p { margin-top:14px; color:#64748b; font-size:1rem; }
+    .services-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:32px; }
+    .service-card { background:#fff; border-radius:12px; padding:36px 28px; box-shadow:0 4px 20px rgba(0,33,71,0.08); border:1.5px solid #e2e8f0; transition:all 0.35s cubic-bezier(0.34,1.56,0.64,1); text-align:center; position:relative; overflow:hidden; z-index:1; text-decoration:none; color:inherit; display:block; }
+    .service-card::before { content:''; position:absolute; top:0; left:0; width:100%; height:0; background:linear-gradient(to bottom,#002147,#3a7bd5); transition:height 0.4s ease; z-index:-1; }
+    .service-card:hover { transform:translateY(-12px); color:#fff; box-shadow:0 20px 40px rgba(0,33,71,0.2); }
+    .service-card:hover::before { height:100%; }
+    .service-card:hover h3 { color:#fff; }
+    .service-card:hover p { color:rgba(255,255,255,0.85); }
+    .service-icon { font-size:2.8rem; margin-bottom:20px; display:block; transition:transform 0.3s; }
+    .service-card:hover .service-icon { transform:scale(1.15); }
+    .service-card h3 { font-family:'Nunito',serif; font-size:1.5rem; color:#002147; margin-bottom:14px; transition:color 0.3s; }
+    .service-card p { font-size:0.92rem; color:#64748b; line-height:1.7; margin:0; transition:color 0.3s; }
+
+    /* Values */
+    .values { background:linear-gradient(rgba(0,0,0,0.3),rgba(0,0,0,0.3)),url('/images/values.jpg'); background-size:cover; background-position:center; padding:100px 0; }
+    .values .section-title h2 { color:#fff; }
+    .values .section-title h2:after { background:#fff; }
+    .values .section-title p { color:rgba(255,255,255,0.8); }
+    .values-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:32px; }
+    .flip-card { height:280px; perspective:1000px; }
+    .flip-card-inner { position:relative; width:100%; height:100%; text-align:center; transition:transform 0.75s; transform-style:preserve-3d; cursor:pointer; }
+    .flip-card:hover .flip-card-inner { transform:rotateY(180deg); }
+    .flip-card-front,.flip-card-back { position:absolute; width:100%; height:100%; -webkit-backface-visibility:hidden; backface-visibility:hidden; border-radius:12px; display:flex; flex-direction:column; justify-content:center; align-items:center; padding:28px; box-shadow:0 8px 24px rgba(0,0,0,0.12); }
+    .flip-card-front { background:#fff; color:#002147; }
+    .flip-card-back { background:linear-gradient(135deg,#002147,#3a7bd5); color:#fff; transform:rotateY(180deg); }
+    .value-icon { font-size:2.8rem; margin-bottom:16px; color:#002147; }
+    .flip-card-front h3 { font-family:'Nunito',serif; font-size:1.4rem; margin-bottom:10px; }
+    .flip-card-front p { font-size:0.85rem; color:#94a3b8; }
+    .flip-card-back h3 { font-family:'Nunito',serif; font-size:1.4rem; color:#fff; margin-bottom:12px; }
+    .flip-card-back p { font-size:0.9rem; line-height:1.65; }
+
+    /* Story */
+    .story { padding:100px 0; background:#fff; }
+    .story-content { max-width:860px; margin:0 auto; text-align:center; position:relative; }
+    .story-content::before { content:'"'; position:absolute; top:-60px; left:50%; transform:translateX(-50%); font-size:9rem; color:#e8f0fe; z-index:-1; font-family:'Cormorant Garamond',serif; line-height:1; }
+    .story-content p { font-size:1.12rem; margin-bottom:26px; line-height:1.85; color:#454c5a; }
+    .story-content .story-sig { font-family:'Cormorant Garamond',serif; font-weight:700; color:#002147; font-size:1.15rem; margin-top:30px; font-style:italic; }
+
+    /* CTA */
+    .cta { background:linear-gradient(135deg,#002147 0%,#3a7bd5 100%); color:#fff; text-align:center; padding:100px 0; position:relative; overflow:hidden; }
+    .cta::before { content:''; position:absolute; inset:0; background-image:linear-gradient(rgba(255,255,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.03) 1px,transparent 1px); background-size:50px 50px; }
+    .cta .container { position:relative; z-index:1; }
+    .cta h2 { font-family:'Nunito',serif; color:#fff; font-size:2.6rem; margin-bottom:16px; }
+    .cta p { max-width:620px; margin:0 auto 36px; color:rgba(255,255,255,0.8); font-size:1.08rem; }
+    .cta-btns { display:flex; justify-content:center; gap:16px; flex-wrap:wrap; }
+
+    @keyframes fadeInUp { from { opacity:0; transform:translateY(28px); } to { opacity:1; transform:translateY(0); } }
+    @media(max-width:992px) { .about-content { max-width:100%; } }
+    @media(max-width:768px) {
+      .values { background-attachment:scroll; }
+      .values-grid { grid-template-columns:1fr; }
+      .hero-btns { flex-direction:column; align-items:center; }
+      .hero-btns .btn { width:100%; max-width:280px; }
+      .cta-btns { flex-direction:column; align-items:center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══ HEADER ═══ -->
+<header id="header">
+  <div class="container header-container">
+    <a href="index.html" class="logo">
+      <img src="/images/hezalogo.png" alt="Heza Coordination" class="logo-img">
+    </a>
+    <button class="mobile-toggle" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="header-nav">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#values">Values</a></li>
+      <li><a href="#story">Our Story</a></li>
+      <li class="nav-cta">
+        <a href="#" class="book-cta" data-service="General Inquiry">Book a Consultation</a>
+      </li>
+    </ul>
+  </div>
+</header>
+
+<!-- ═══ HERO CAROUSEL ═══ -->
+<section class="hero-carousel" id="home">
+  <div class="carousel-slides">
+
+    <div class="carousel-slide slide-1 active">
+      <div class="slide-overlay">
+        <div class="slide-content">
+          <h1>Your Single Point of Coordination</h1>
+          <p>Heza takes the stress out of life’s transitions. We provide expert coordination for residential and corporate transitions. We handle every detail so you can enjoy a simple, safe, and efficient experience.</p>
+          <div class="hero-btns">
+            <button class="btn btn-navy book-cta" data-service="General Inquiry">Start Your Journey</button>
+            <a href="#services" class="btn btn-outline">Discover Our Services</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+     <div class="carousel-slide slide-3">
+      <div class="slide-overlay">
+        <div class="slide-content">
+          <h1>Prioritizing Security, Time Management &amp; Peace of Mind</h1>
+          <p>At Heza, security and professionalism are the foundation of every transition. We manage each step of the process, with efficient coordination and communication, saving our clients valuable time and peace of mind.</p>
+          <div class="hero-btns">
+            <button class="btn btn-outline book-cta" data-service="General Inquiry">Get Peace of Mind</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="carousel-slide slide-4">
+      <div class="slide-overlay">
+        <div class="slide-content">
+          <h1>Working with Trusted Partners</h1>
+          <p>We only partner with fully vetted professionals, protecting you from scams, unreliable contractors, and unexpected fees.</p>
+          <div class="hero-btns">
+            <button class="btn btn-navy book-cta" data-service="General Inquiry">Let Us Help</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="carousel-slide slide-5">
+      <div class="slide-overlay">
+        <div class="slide-content">
+          <h1>We Make Your Transitions Smoother</h1>
+          <p>We handle the full scope of work, from initial planning and organizing to logistics and execution, ensuring a seamless, well-coordinated experience with minimal disruption.</p>
+          <div class="hero-btns">
+            <button class="btn btn-outline book-cta" data-service="General Inquiry">Contact Us Today</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="carousel-slide slide-2">
+      <div class="slide-overlay">
+        <div class="slide-content">
+          <h1>We're Here to Carry the Load So You Don't Have To!</h1>
+          <p>By managing the details, our clients can focus on what matters most; confident that every aspect of their transition, from logistics to the handling of their belongings, is being executed with precision and care.</p>
+          <div class="hero-btns">
+            <button class="btn btn-navy book-cta" data-service="General Inquiry">Learn More</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="carousel-nav">
+    <button class="carousel-prev"><i class="fas fa-chevron-left"></i></button>
+    <button class="carousel-next"><i class="fas fa-chevron-right"></i></button>
+  </div>
+  <div class="carousel-controls">
+    <div class="carousel-dots">
+      <div class="carousel-dot active" data-slide="0"></div>
+      <div class="carousel-dot" data-slide="1"></div>
+      <div class="carousel-dot" data-slide="2"></div>
+      <div class="carousel-dot" data-slide="3"></div>
+      <div class="carousel-dot" data-slide="4"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ ABOUT ═══ -->
+<section class="about" id="about">
+  <div class="container">
+    <div class="about-content">
+      <div class="about-text fade-in">
+        <h2>Welcome! We're Here to Coordinate Your Transition With Care</h2>
+        <p>Life and business transitions mark the start of something new, yet they also bring logistics, deadlines, decisions, and emotional complexity. Whether you're helping aging parents downsize, planning a family move, relocating for work, decluttering a space, or managing a commercial office relocation or upgrade, Heza is here to help. You don't have to carry the weight alone; we handle the complexities so you can focus on the transition ahead.</p>
+        <p>We created this service to be your single, trusted point of coordination during times that demand clarity, compassion, and structure. Our role is simple: we manage the details so you can focus on what matters most.</p>
+        <div class="intro-highlight">
+          From thoughtful downsizing and senior transitions, to full move coordination, vendor management, home setup, cleaning, and ongoing maintenance scheduling. Our services are designed to reduce stress, protect your time, and ensure nothing falls through the cracks.
+        </div>
+        <p>We work with vetted, insured professionals and oversee each phase of the process; planning, scheduling, supervision, and execution. We ensure your transition into the next chapter feels smooth, supported, and complete.</p>
+        <!-- <p><strong>Respectful. Organized. Seamless.</strong></p> -->
+        <!-- <p>Welcome to a service built on trust, coordination, and care — from the first conversation to the final placement of every detail.</p> -->
+      </div>
+
+            <div class="quiz-wrapper fade-in" id="serviceFinder">
+        <div class="quiz-inner">
+          <div class="quiz-header">
+            <span class="quiz-eyebrow">Find Your Service</span>
+            <p class="quiz-title">Not sure where to start? Let us help.</p>
+          </div>
+          <div class="quiz-progress-bar">
+            <div class="quiz-progress-fill" id="quizProgress" style="width:0%"></div>
+          </div>
+ 
+          <!-- Step 1 -->
+          <div class="quiz-step active" data-step="1">
+            <p class="quiz-question">What best describes your current situation?</p>
+            <div class="quiz-options">
+              <button class="quiz-opt" data-val="moving">🏠 I'm moving to a new home</button>
+              <button class="quiz-opt" data-val="organizing">📦 I want to organize my current home</button>
+              <button class="quiz-opt" data-val="family">👨‍👩‍👧 I'm helping a family member with a transition</button>
+              <button class="quiz-opt" data-val="business">🏢 I have a business or office relocation</button>
+            </div>
+            <div class="quiz-nav">
+              <span></span>
+              <span class="quiz-step-counter">Step 1 of 3</span>
+            </div>
+          </div>
+ 
+          <!-- Step 2 -->
+          <div class="quiz-step" data-step="2">
+            <p class="quiz-question">What's your biggest challenge right now?</p>
+            <div class="quiz-options">
+              <button class="quiz-opt" data-val="logistics">📋 Managing all the planning &amp; logistics</button>
+              <button class="quiz-opt" data-val="clutter">🗂️ Too much stuff — I don't know where to start</button>
+              <button class="quiz-opt" data-val="packing">📦 Packing &amp; coordinating vendors safely</button>
+              <button class="quiz-opt" data-val="storage">🧼 A chaotic garage or storage space</button>
+            </div>
+            <div class="quiz-nav">
+              <button class="quiz-back" id="quizBack2">← Back</button>
+              <span class="quiz-step-counter">Step 2 of 3</span>
+            </div>
+          </div>
+ 
+          <!-- Step 3 -->
+          <div class="quiz-step" data-step="3">
+            <p class="quiz-question">When do you need support?</p>
+            <div class="quiz-options">
+              <button class="quiz-opt" data-val="urgent">⚡ Very soon — within the next 4 weeks</button>
+              <button class="quiz-opt" data-val="soon">📅 In the next 1–3 months</button>
+              <button class="quiz-opt" data-val="planning">🔍 Just exploring my options for now</button>
+            </div>
+            <div class="quiz-nav">
+              <button class="quiz-back" id="quizBack3">← Back</button>
+              <span class="quiz-step-counter">Step 3 of 3</span>
+            </div>
+          </div>
+ 
+          <!-- Result -->
+          <div class="quiz-result" id="quizResult">
+            <div class="result-icon" id="resultIcon">🌿</div>
+            <span class="result-label">We recommend</span>
+            <p class="result-title" id="resultTitle">Move Coordination</p>
+            <p class="result-desc" id="resultDesc">Based on your answers, this service is the best fit for your needs.</p>
+            <div class="result-btns">
+              <a href="#" class="btn-result-primary book-cta" id="resultBookBtn" data-service="General Inquiry">
+                <i class="fas fa-calendar-check"></i> Book This Service
+              </a>
+              <button class="btn-result-ghost" id="quizRetake">Try Again</button>
+            </div>
+          </div>
+ 
+        </div>
+
+    </div>
+  </div>
+</section>
+
+
+
+<!-- ═══ SERVICES ═══ -->
+<section class="services" id="services">
+  <div class="container">
+    <div class="section-title">
+      <h2>Our Services</h2>
+      <p>Comprehensive transition coordination tailored to your needs</p>
+    </div>
+    <div class="services-grid">
+      <a href="move-coordination.html" class="service-card fade-in">
+        <span class="service-icon">🌿</span>
+        <h3>Move Coordination</h3>
+        <p>Planning, scheduling and coordinating moves providing a smooth transition.</p>
+      </a>
+      <a href="decluttering.html" class="service-card fade-in">
+        <span class="service-icon">🧹</span>
+        <h3>Decluttering Support</h3>
+        <p>Sorting, organization, donation, recycling &amp; disposal guidance. Creating a refreshed space.</p>
+      </a>
+      <a href="downsizing.html" class="service-card fade-in">
+        <span class="service-icon">🏡</span>
+        <h3>Downsizing</h3>
+        <p>Downsizing support for seniors, families, businesses &amp; busy professionals. Providing stress-free transitions.</p>
+      </a>
+      <a href="storage-organization.html" class="service-card fade-in">
+        <span class="service-icon">🧼</span>
+        <h3>Storage Space Organization</h3>
+        <p>Transforming cluttered storage areas into functional, organized spaces. Using layout planning and easy to maintain systems.</p>
+      </a>
+      <a href="packing-supervision.html" class="service-card fade-in">
+        <span class="service-icon">📦</span>
+        <h3>Building Management Coordination</h3>
+        <p>Overseeing the end-to-end maintenance of client property.</p>
+      </a>
+      <a href="move-planning.html" class="service-card fade-in">
+        <span class="service-icon">💡</span>
+        <h3>Need a Customized Plan?</h3>
+        <p>We provide customized solutions based on your unique requirements.</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ VALUES ═══ -->
+<section class="values" id="values">
+  <div class="container">
+    <div class="section-title">
+      <h2>Our Values</h2>
+      <p>The principles that guide every transition we coordinate</p>
+    </div>
+    <div class="values-grid">
+      <div class="flip-card fade-in">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">
+            <div class="value-icon"><i class="fas fa-shield-alt"></i></div>
+            <h3>Security</h3>
+            <p>Hover to learn more</p>
+          </div>
+          <div class="flip-card-back">
+            <h3>Security</h3>
+            <p>We work only with fully vetted professionals, protecting you from scams, unreliable contractors, and unexpected fees. Your peace of mind is our priority.</p>
+          </div>
+        </div>
+      </div>
+      <div class="flip-card fade-in">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">
+            <div class="value-icon"><i class="fas fa-clock"></i></div>
+            <h3>Time Management</h3>
+            <p>Hover to learn more</p>
+          </div>
+          <div class="flip-card-back">
+            <h3>Time Management</h3>
+            <p>We save you valuable time by planning, scheduling, and supervising each process from start to finish, ensuring the work is completed properly and to your satisfaction.</p>
+          </div>
+        </div>
+      </div>
+      <div class="flip-card fade-in">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">
+            <div class="value-icon"><i class="fas fa-heart"></i></div>
+            <h3>Peace of Mind</h3>
+            <p>Hover to learn more</p>
+          </div>
+          <div class="flip-card-back">
+            <h3>Peace of Mind</h3>
+            <p>We protect your time, safeguard your decisions, and deliver results you can feel confident about. Organized. Supervised. Secure.</p>
+          </div>
+        </div>
+      </div>
+      <div class="flip-card fade-in">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">
+            <div class="value-icon"><i class="fas fa-hand-holding-heart"></i></div>
+            <h3>Care</h3>
+            <p>Hover to learn more</p>
+          </div>
+          <div class="flip-card-back">
+            <h3>Care</h3>
+            <p>We approach every transition with compassion and understanding, respecting the emotional weight of life's changes while providing professional, structured support.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ STORY ═══ -->
+<section class="story" id="story">
+  <div class="container">
+    <div class="section-title">
+      <h2>Our Story</h2>
+    </div>
+    <div class="story-content fade-in">
+      <p>We are Heza and we are here to carry the load so you don't have to.</p>
+      <p>We specialize in consulting and coordinating both residential and professional transitions. Whether you're downsizing, relocating, supporting aging parents, managing an estate, or maintaining a property; our role is to make each step smoother, safer, and more efficient.</p>
+      <p>Acting as a steady anchor for your transition, we save you valuable time by planning, scheduling, and supervising every process from start to finish, ensuring the work is completed properly and to your satisfaction.</p>
+      <p>We partner only with fully vetted, trusted professionals, so you're protected from scams, unreliable contractors, and unexpected fees.</p>
+      <p class="story-sig">At Heza, we protect your time, safeguard your decisions, and deliver results you can feel confident about.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CTA ═══ -->
+<section class="cta" id="contact">
+  <div class="container">
+    <h2>Ready for a Beautifully Coordinated Transition?</h2>
+    <p>Contact us today to discuss your needs and discover how Heza Coordination can transform your experience.</p>
+    <div class="cta-btns">
+      <button class="btn btn-outline book-cta" data-service="General Inquiry">
+        <i class="fas fa-phone"></i> Book a Consultation
+      </button>
+      <a href="/cdn-cgi/l/email-protection#8de4e3ebe2cde5e8f7eceee2e2ffe9e4e3ecf9e4e2e3a3eee2e0" class="btn btn-navy">
+        <i class="fas fa-envelope"></i> Email Us
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <h3 class="footer-heading">Heza Coordination</h3>
+        <p>We are here to carry the load so you don't have to. Specializing in consulting and coordinating both residential and professional transitions with care and expertise.</p>
+        <div>
+          <div class="footer-contact-item"><i class="fas fa-envelope"></i> <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="452c2b232a052d203f24262a2a37212c2b24312c2a2b6b262a28">[email&#160;protected]</a></div>
+          <div class="footer-contact-item"><i class="fas fa-phone"></i> 613-501-9162</div>
+          <div class="footer-contact-item"><i class="fas fa-map-marker-alt"></i> Ottawa, Ontario</div>
+        </div>
+        <div class="social-row">
+          <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+      </div>
+      <div>
+        <h3 class="footer-heading">Quick Links</h3>
+        <ul class="footer-links">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#values">Our Values</a></li>
+          <li><a href="#story">Our Story</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="footer-heading">Services</h3>
+        <ul class="footer-links">
+          <li><a href="move-coordination.html">Move Coordination</a></li>
+          <li><a href="decluttering.html">Decluttering</a></li>
+          <li><a href="downsizing.html">Downsizing</a></li>
+          <li><a href="storage-organization.html">Storage Space Organization</a></li>
+          <li><a href="packing-supervision.html">Building Management Coordination</a></li>
+          <li><a href="move-planning.html">Custom Planning</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 Heza Coordination. All rights reserved. Coordinating Life's Transitions With Care.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+<script>
+/* ══════════════════════════════════════════
+   TRANSITION READINESS DIAGNOSTIC
+══════════════════════════════════════════ */
+(function() {
+  const CATS = ['planning','logistics','budget','coordination'];
+  const CAT_LABELS = { planning:'Planning', logistics:'Logistics', budget:'Budget', coordination:'Coordination' };
+  const CAT_ICONS  = { planning:'📋', logistics:'🚚', budget:'💰', coordination:'🤝' };
+
+  // Service recommendations map: which service helps which weak category
+  const CAT_SERVICE = {
+    planning:     { icon:'💡', name:'Customized Move Planning', desc:'Build a clear, phased roadmap tailored to your timeline and goals.', url:'move-planning.html', svc:'Customized Move Planning' },
+    logistics:    { icon:'🌿', name:'Move Coordination', desc:'End-to-end oversight of your relocation — vetted movers, on-site supervision, zero stress.', url:'move-coordination.html', svc:'Move Coordination' },
+    budget:       { icon:'📦', name:'Packing Supervision & Vendor Coordination', desc:'We manage every vendor and contractor so nothing goes over budget or off schedule.', url:'packing-supervision.html', svc:'Packing Supervision & Vendor Coordination' },
+    coordination: { icon:'🏡', name:'Downsizing & Transition Assistance', desc:'Compassionate coordination across your household — everyone aligned, every step covered.', url:'downsizing.html', svc:'Downsizing & Transition Assistance' }
+  };
+
+  const answers = { planning:[null,null], logistics:[null,null], budget:[null,null], coordination:[null,null] };
+  const submitBtn  = document.getElementById('diagSubmit');
+  const formPanel  = document.getElementById('diagFormPanel');
+  const resultsPanel = document.getElementById('diagResultsPanel');
+  let animFrame = null;
+
+  // ── Pure-canvas radar chart ──
+  function drawRadar(canvas, labels, values, maxVal) {
+    maxVal = maxVal || 4;
+    const dpr = window.devicePixelRatio || 1;
+
+    // Fixed logical size — labels need generous padding
+    const size = 460;
+    canvas.width  = size * dpr;
+    canvas.height = size * dpr;
+    canvas.style.width  = '100%';
+    canvas.style.maxWidth = size + 'px';
+    canvas.style.height = 'auto';
+    canvas.style.aspectRatio = '1';
+
+    const ctx = canvas.getContext('2d');
+    ctx.scale(dpr, dpr);
+
+    const cx = size / 2;
+    const cy = size / 2;
+    const r  = size * 0.25;   // smaller radius so labels have room
+    const n  = labels.length;
+    const angleStep = (Math.PI * 2) / n;
+    const startAngle = -Math.PI / 2;
+
+    function pt(i, radius) {
+      const a = startAngle + i * angleStep;
+      return { x: cx + Math.cos(a) * radius, y: cy + Math.sin(a) * radius };
+    }
+
+    function drawStatic() {
+      // Grid rings
+      for (let ring = 1; ring <= maxVal; ring++) {
+        ctx.beginPath();
+        for (let i = 0; i < n; i++) {
+          const p = pt(i, r * ring / maxVal);
+          i === 0 ? ctx.moveTo(p.x, p.y) : ctx.lineTo(p.x, p.y);
+        }
+        ctx.closePath();
+        ctx.strokeStyle = ring === maxVal ? 'rgba(0,33,71,0.14)' : 'rgba(0,33,71,0.06)';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+      }
+
+      // Spokes
+      for (let i = 0; i < n; i++) {
+        const p = pt(i, r);
+        ctx.beginPath();
+        ctx.moveTo(cx, cy);
+        ctx.lineTo(p.x, p.y);
+        ctx.strokeStyle = 'rgba(0,33,71,0.09)';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+      }
+
+      // Labels — placed outside the outer ring with generous offset
+      const labelRadius = r + 40;
+      const fontSize = 14;
+      ctx.font = `700 ${fontSize}px Nunito, sans-serif`;
+      ctx.fillStyle = '#374151';
+      ctx.textBaseline = 'middle';
+
+      for (let i = 0; i < n; i++) {
+        const a = startAngle + i * angleStep;
+        const lx = cx + Math.cos(a) * labelRadius;
+        const ly = cy + Math.sin(a) * labelRadius;
+
+        // Align based on quadrant
+        if (Math.cos(a) > 0.1)       ctx.textAlign = 'left';
+        else if (Math.cos(a) < -0.1) ctx.textAlign = 'right';
+        else                          ctx.textAlign = 'center';
+
+        ctx.fillText(labels[i], lx, ly);
+      }
+    }
+
+    if (animFrame) cancelAnimationFrame(animFrame);
+    let progress = 0;
+
+    function animate() {
+      progress = Math.min(progress + 0.045, 1);
+      const ease = 1 - Math.pow(1 - progress, 3);
+
+      ctx.clearRect(0, 0, size, size);
+      drawStatic();
+
+      // Data polygon
+      ctx.beginPath();
+      for (let i = 0; i < n; i++) {
+        const v = Math.max(0.05, Math.min(values[i] * ease, maxVal));
+        const p = pt(i, r * v / maxVal);
+        i === 0 ? ctx.moveTo(p.x, p.y) : ctx.lineTo(p.x, p.y);
+      }
+      ctx.closePath();
+      ctx.fillStyle = 'rgba(58,123,213,0.15)';
+      ctx.fill();
+      ctx.strokeStyle = '#3a7bd5';
+      ctx.lineWidth = 2.5;
+      ctx.lineJoin = 'round';
+      ctx.stroke();
+
+      // Data points
+      for (let i = 0; i < n; i++) {
+        const v = Math.max(0.05, Math.min(values[i] * ease, maxVal));
+        const p = pt(i, r * v / maxVal);
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, 5, 0, Math.PI * 2);
+        ctx.fillStyle = '#002147';
+        ctx.fill();
+        ctx.strokeStyle = '#fff';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+      }
+
+      if (progress < 1) animFrame = requestAnimationFrame(animate);
+    }
+
+    animate();
+  }
+
+  // ── Scale button interaction ──
+  document.querySelectorAll('.scale-row').forEach(row => {
+    const cat = row.dataset.cat;
+    const q   = parseInt(row.dataset.q);
+    row.querySelectorAll('.scale-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        row.querySelectorAll('.scale-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        answers[cat][q] = parseInt(btn.dataset.val);
+        checkAllAnswered();
+      });
+    });
+  });
+
+  function checkAllAnswered() {
+    const allDone = CATS.every(c => answers[c][0] !== null && answers[c][1] !== null);
+    submitBtn.disabled = !allDone;
+    if (allDone) submitBtn.querySelector('span,i')?.parentNode;
+  }
+
+  // ── Submit ──
+  submitBtn.addEventListener('click', () => {
+    const scores = {};
+    CATS.forEach(c => { scores[c] = (answers[c][0] + answers[c][1]) / 2; });
+    const overall = CATS.reduce((s,c) => s + scores[c], 0) / 4;
+    renderResults(scores, overall);
+  });
+
+  function renderResults(scores, overall) {
+    // Scroll to diagnostic
+    document.getElementById('diagnostic').scrollIntoView({ behavior:'smooth', block:'start' });
+
+    // 1. Score ring
+    const pct = Math.round(((overall - 1) / 3) * 100);
+    const circumference = 465; // 2π × 74
+    const offset = circumference - (circumference * pct / 100);
+    setTimeout(() => {
+      document.getElementById('diagRingFill').style.strokeDashoffset = offset;
+    }, 100);
+    document.getElementById('diagScorePct').textContent = pct + '%';
+
+    // Ring colour
+    const fill = document.getElementById('diagRingFill');
+    if      (pct < 40) { fill.style.stroke = '#ef4444'; }
+    else if (pct < 65) { fill.style.stroke = '#f59e0b'; }
+    else if (pct < 85) { fill.style.stroke = '#3b82f6'; }
+    else               { fill.style.stroke = '#10b981'; }
+
+    // Verdict
+    let verdictClass, verdictLabel, verdictMsg;
+    if (pct < 40) {
+      verdictClass = 'verdict-early'; verdictLabel = 'Early Stage';
+      verdictMsg = 'Your transition needs significant groundwork. There are several areas that, without attention, could create real challenges on moving day. Let\'s build a solid foundation together.';
+    } else if (pct < 65) {
+      verdictClass = 'verdict-developing'; verdictLabel = 'Developing';
+      verdictMsg = 'You\'ve made a start, but key gaps remain that could lead to delays, cost overruns, or added stress. Targeted support now will make a significant difference.';
+    } else if (pct < 85) {
+      verdictClass = 'verdict-ontrack'; verdictLabel = 'On Track';
+      verdictMsg = 'You\'re well underway. A few focused improvements will sharpen your readiness and reduce the risk of last-minute surprises. Professional oversight can close those gaps efficiently.';
+    } else {
+      verdictClass = 'verdict-prepared'; verdictLabel = 'Well Prepared';
+      verdictMsg = 'You\'re in excellent shape. Our team can handle the operational details so you can stay focused on your next chapter with total confidence.';
+    }
+    const verdictEl = document.getElementById('diagVerdict');
+    verdictEl.textContent = verdictLabel;
+    verdictEl.className = 'score-label-verdict ' + verdictClass;
+    document.getElementById('diagVerdictMsg').textContent = verdictMsg;
+
+    // 2. Category bars
+    const barsEl = document.getElementById('diagCatBars');
+    barsEl.innerHTML = '';
+    CATS.forEach(c => {
+      const pctCat = Math.round(((scores[c] - 1) / 3) * 100);
+      const isWeak = pctCat < 50;
+      const isCrit = pctCat < 33;
+      barsEl.innerHTML += `
+        <div class="cat-bar-item">
+          <div class="cat-bar-header">
+            <span class="cat-bar-name">${CAT_ICONS[c]} ${CAT_LABELS[c]}</span>
+            <span class="cat-bar-score">${pctCat}%</span>
+          </div>
+          <div class="cat-bar-track">
+            <div class="cat-bar-fill ${isCrit?'critical':isWeak?'weak':''}" style="width:0%" data-w="${pctCat}%"></div>
+          </div>
+        </div>`;
+    });
+    // Animate bars after paint
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      barsEl.querySelectorAll('.cat-bar-fill').forEach(b => { b.style.width = b.dataset.w; });
+    }));
+
+    // 5. Show results first so canvas has layout dimensions
+    resultsPanel.classList.add('visible');
+    setTimeout(() => resultsPanel.scrollIntoView({ behavior:'smooth', block:'nearest' }), 80);
+
+    // 3. Radar chart — pure canvas, no dependencies (draw after panel is visible)
+    const chartData = CATS.map(c => scores[c]);
+    requestAnimationFrame(() => drawRadar(document.getElementById('diagChart'), CATS.map(c => CAT_LABELS[c]), chartData));
+
+    // 4. Recommendations — show 2 weakest categories
+    const sorted = [...CATS].sort((a,b) => scores[a] - scores[b]);
+    const recsEl = document.getElementById('diagRecsGrid');
+    recsEl.innerHTML = '';
+    sorted.slice(0,2).forEach((c, i) => {
+      const svc = CAT_SERVICE[c];
+      recsEl.innerHTML += `
+        <div class="rec-card ${i===0?'primary':''}">
+          <div class="rec-card-top">
+            <div class="rec-icon">${svc.icon}</div>
+            <div class="rec-body">
+              <h5>${svc.name}</h5>
+              <p>${svc.desc}</p>
+              ${i===0?'<span class="rec-badge">Top Match</span>':''}
+            </div>
+          </div>
+          <div class="rec-card-actions">
+            <button class="rec-btn-book book-cta" data-service="${svc.svc}">
+              <i class="fas fa-calendar-check" style="margin-right:5px;font-size:0.75rem;"></i>Book This Service
+            </button>
+            <a href="${svc.url}" class="rec-btn-view">
+              View Service <i class="fas fa-arrow-right" style="font-size:0.7rem;"></i>
+            </a>
+          </div>
+        </div>`;
+    });
+    // Bind booking buttons on the newly rendered cards
+    recsEl.querySelectorAll('.rec-btn-book').forEach(btn => {
+      btn.addEventListener('click', e => {
+        e.preventDefault();
+        const sel = document.getElementById('mService');
+        if (sel) sel.value = btn.dataset.service || '';
+        document.getElementById('bookingModal')?.classList.add('open');
+        document.body.style.overflow = 'hidden';
+        // ensure step 1 is shown
+        document.querySelectorAll('.form-step').forEach(s => s.classList.remove('active'));
+        document.getElementById('modalStep1')?.classList.add('active');
+        document.querySelectorAll('.progress-dot,.progress-label').forEach(el => {
+          el.classList.remove('active','done');
+          if (parseInt(el.dataset.step) === 1) el.classList.add('active');
+        });
+        document.getElementById('modalBack').style.display = 'none';
+        document.getElementById('modalNext').innerHTML = 'Continue <i class="fas fa-arrow-right"></i>';
+      });
+    });
+
+  }
+})();
+</script>
+</body>
+</html>

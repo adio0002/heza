@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Transition Readiness Diagnostic | Heza Coordination</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Nunito:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    :root { --primary-blue:#002147; --light-blue:#e8f0fe; --accent-blue:#3a7bd5; --ff-body:'Nunito',system-ui,sans-serif; }
+
+    .diag-page-hero {
+      background:linear-gradient(135deg,#002147 0%,#1a3f6b 55%,#3a7bd5 100%);
+      padding:140px 0 80px; text-align:center; position:relative; overflow:hidden;
+    }
+    .diag-page-hero::before {
+      content:''; position:absolute; inset:0;
+      background:radial-gradient(ellipse at 65% 50%,rgba(58,123,213,0.22) 0%,transparent 68%);
+    }
+    .diag-page-hero .container { position:relative; z-index:1; }
+    .diag-page-hero .back-link {
+      display:inline-flex; align-items:center; gap:7px;
+      color:rgba(255,255,255,0.6); font-size:0.82rem; text-decoration:none;
+      margin-bottom:28px; font-weight:600; letter-spacing:0.3px;
+      transition:color 0.2s;
+    }
+    .diag-page-hero .back-link:hover { color:#fff; }
+    .diag-page-hero .eyebrow {
+      display:block; font-size:0.72rem; font-weight:700;
+      letter-spacing:2.5px; text-transform:uppercase; color:#7eb8f7; margin-bottom:14px;
+    }
+    .diag-page-hero h1 {
+      font-family:'Nunito',sans-serif; font-size:clamp(2rem,4vw,3rem);
+      color:#fff; margin:0 0 18px; font-weight:700; line-height:1.1;
+    }
+    .diag-page-hero p {
+      font-size:1.05rem; color:rgba(255,255,255,0.8); max-width:580px;
+      margin:0 auto; line-height:1.75;
+    }
+    .hero-stats { display:flex; justify-content:center; gap:52px; margin-top:44px; flex-wrap:wrap; }
+    .hero-stat { text-align:center; }
+    .hero-stat strong {
+      display:block; font-family:'Cormorant Garamond',serif;
+      font-size:2.5rem; color:#fff; font-weight:700; line-height:1;
+    }
+    .hero-stat span { font-size:0.78rem; color:rgba(255,255,255,0.6); margin-top:5px; display:block; }
+
+    /* Main tool wrapper */
+    .diagnostic-page { background:#f0f4fa; padding:80px 0 100px; }
+    .diag-card { background:#fff; border-radius:20px; box-shadow:0 12px 48px rgba(0,33,71,0.1); overflow:hidden; }
+
+    /* Form panel */
+    .diag-form-panel { padding:52px 56px; }
+    .diag-intro { margin-bottom:44px; }
+    .diag-intro .eyebrow { font-size:0.72rem; font-weight:700; letter-spacing:2.5px; text-transform:uppercase; color:#3a7bd5; display:block; margin-bottom:10px; }
+    .diag-intro h3 { font-family:'Nunito',sans-serif; font-size:1.75rem; color:#002147; margin:0 0 10px; }
+    .diag-intro p { color:#64748b; font-size:0.95rem; line-height:1.7; margin:0; }
+    .diag-categories { display:grid; grid-template-columns:1fr 1fr; gap:36px 48px; margin-bottom:40px; }
+    .diag-cat-heading { display:flex; align-items:center; gap:10px; margin-bottom:20px; padding-bottom:10px; border-bottom:2px solid #e8f0fe; }
+    .diag-cat-heading .cat-icon { font-size:1.25rem; }
+    .diag-cat-heading h4 { font-family:'Nunito',sans-serif; font-size:0.95rem; font-weight:700; color:#002147; margin:0; letter-spacing:0.5px; text-transform:uppercase; }
+    .diag-question { margin-bottom:22px; }
+    .diag-question label { display:block; font-size:0.88rem; font-weight:500; color:#374151; margin-bottom:11px; line-height:1.5; }
+    .scale-row { display:grid; grid-template-columns:repeat(4,1fr); gap:6px; }
+    .scale-btn { border:1.5px solid #cbd5e1; background:#fff; color:#94a3b8; border-radius:8px; padding:8px 4px; font-family:'Nunito',sans-serif; font-size:0.75rem; font-weight:600; cursor:pointer; text-align:center; transition:all 0.22s ease; line-height:1.3; }
+    .scale-btn:hover { border-color:#3a7bd5; color:#3a7bd5; background:#f0f7ff; }
+    .scale-btn.active { background:linear-gradient(135deg,#002147,#3a7bd5); border-color:transparent; color:#fff; box-shadow:0 4px 12px rgba(58,123,213,0.35); transform:translateY(-1px); }
+    .scale-btn .sb-num { display:block; font-size:1rem; font-weight:700; margin-bottom:2px; }
+    .scale-btn .sb-label { display:block; font-size:0.68rem; font-weight:500; opacity:0.85; }
+    .diag-submit-row { text-align:center; }
+    .diag-submit { background:linear-gradient(135deg,#002147 0%,#3a7bd5 100%); color:#fff; border:none; border-radius:10px; padding:16px 48px; font-family:'Nunito',sans-serif; font-size:1rem; font-weight:700; cursor:pointer; transition:all 0.3s ease; box-shadow:0 6px 20px rgba(0,33,71,0.22); display:inline-flex; align-items:center; gap:10px; }
+    .diag-submit:hover { transform:translateY(-2px); box-shadow:0 10px 28px rgba(0,33,71,0.3); }
+    .diag-submit:disabled { opacity:0.45; cursor:not-allowed; transform:none; }
+    .diag-submit-note { margin-top:10px; font-size:0.78rem; color:#94a3b8; }
+
+    /* Results panel */
+    .diag-results-panel { display:none; padding:52px 56px; border-top:1px solid #e8f0fe; background:linear-gradient(180deg,#fafcff 0%,#fff 100%); }
+    .diag-results-panel.visible { display:block; animation:resultsFadeIn 0.6s ease both; }
+    @keyframes resultsFadeIn { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+    .results-grid { display:grid; grid-template-columns:280px 1fr; gap:48px; align-items:start; }
+    .score-ring-wrap { display:flex; flex-direction:column; align-items:center; margin-bottom:32px; }
+    .score-ring-wrap svg { overflow:visible; }
+    .score-ring-track { fill:none; stroke:#e8f0fe; stroke-width:10; }
+    .score-ring-fill { fill:none; stroke-width:10; stroke-linecap:round; stroke:#3a7bd5; transition:stroke-dashoffset 1.2s cubic-bezier(0.4,0,0.2,1); }
+    .score-ring-text-wrap { text-align:center; margin-top:16px; }
+    .score-pct { font-family:'Cormorant Garamond',serif; font-size:3rem; font-weight:700; color:#002147; display:block; line-height:1; }
+    .score-label-verdict { font-family:'Nunito',sans-serif; font-size:0.82rem; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; margin-top:4px; display:block; }
+    .verdict-early { color:#ef4444; } .verdict-developing { color:#f59e0b; } .verdict-ontrack { color:#3b82f6; } .verdict-prepared { color:#10b981; }
+    .cat-bars { margin-top:4px; }
+    .cat-bar-item { margin-bottom:14px; }
+    .cat-bar-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:5px; }
+    .cat-bar-name { font-size:0.82rem; font-weight:600; color:#374151; }
+    .cat-bar-score { font-size:0.82rem; font-weight:700; color:#002147; }
+    .cat-bar-track { height:7px; background:#e8f0fe; border-radius:4px; overflow:hidden; }
+    .cat-bar-fill { height:100%; border-radius:4px; background:linear-gradient(90deg,#3a7bd5,#5b96f7); transition:width 1s cubic-bezier(0.4,0,0.2,1); }
+    .cat-bar-fill.weak { background:linear-gradient(90deg,#f59e0b,#fbbf24); }
+    .cat-bar-fill.critical { background:linear-gradient(90deg,#ef4444,#f87171); }
+    .chart-heading { font-family:'Nunito',sans-serif; font-size:0.8rem; font-weight:700; text-transform:uppercase; letter-spacing:1.5px; color:#94a3b8; text-align:center; margin-bottom:16px; }
+    #diagChart { display:block; width:100% !important; max-width:380px; height:auto !important; margin:0 auto; }
+    .verdict-msg { font-size:0.9rem; color:#64748b; line-height:1.7; margin:12px 0 0; padding:14px 18px; background:#f8faff; border-left:3px solid #3a7bd5; border-radius:0 8px 8px 0; }
+
+    /* Rec cards */
+    .recs-panel { margin-top:40px; padding-top:36px; border-top:1px solid #e8f0fe; }
+    .recs-panel > h4 { font-family:'Nunito',sans-serif; font-size:0.8rem; font-weight:700; text-transform:uppercase; letter-spacing:1.5px; color:#94a3b8; margin:0 0 18px; }
+    .recs-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:16px; margin-bottom:28px; }
+    .rec-card { border:1.5px solid #e8f0fe; border-radius:14px; padding:20px 20px 16px; display:flex; flex-direction:column; gap:14px; background:#fafcff; transition:box-shadow 0.2s ease; }
+    .rec-card:hover { box-shadow:0 6px 24px rgba(0,33,71,0.09); }
+    .rec-card.primary { border-color:#3a7bd5; background:#f0f7ff; }
+    .rec-card-top { display:flex; align-items:flex-start; gap:14px; }
+    .rec-icon { font-size:1.55rem; flex-shrink:0; margin-top:2px; }
+    .rec-body { flex:1; }
+    .rec-body h5 { font-family:'Nunito',sans-serif; font-size:0.92rem; font-weight:700; color:#002147; margin:0 0 5px; line-height:1.3; }
+    .rec-body p { font-size:0.79rem; color:#64748b; margin:0; line-height:1.55; }
+    .rec-badge { display:inline-block; font-size:0.62rem; font-weight:700; letter-spacing:1px; text-transform:uppercase; background:#3a7bd5; color:#fff; border-radius:3px; padding:2px 7px; margin-top:6px; }
+    .rec-card-actions { display:flex; gap:8px; }
+    .rec-btn-book { flex:1; background:linear-gradient(135deg,#002147,#3a7bd5); color:#fff; border:none; border-radius:8px; padding:9px 14px; font-family:'Nunito',sans-serif; font-size:0.76rem; font-weight:700; cursor:pointer; transition:all 0.22s ease; text-align:center; box-shadow:0 3px 10px rgba(0,33,71,0.18); }
+    .rec-btn-book:hover { transform:translateY(-1px); box-shadow:0 5px 16px rgba(0,33,71,0.28); }
+    .rec-btn-view { flex:1; background:transparent; color:#3a7bd5; border:1.5px solid #3a7bd5; border-radius:8px; padding:9px 14px; font-family:'Nunito',sans-serif; font-size:0.76rem; font-weight:700; cursor:pointer; transition:all 0.22s ease; text-align:center; text-decoration:none; display:flex; align-items:center; justify-content:center; gap:5px; }
+    .rec-btn-view:hover { background:#f0f7ff; }
+
+    /* Bottom row on diagnostic page — retake only */
+    .diag-cta-row { display:flex; gap:12px; flex-wrap:wrap; align-items:center; margin-top:8px; }
+    .diag-retake { background:none; border:1.5px solid #cbd5e1; color:#64748b; border-radius:8px; padding:11px 24px; font-family:'Nunito',sans-serif; font-size:0.88rem; font-weight:600; cursor:pointer; transition:all 0.22s ease; }
+    .diag-retake:hover { border-color:#3a7bd5; color:#3a7bd5; }
+
+    @media(max-width:992px) {
+      .diag-categories { grid-template-columns:1fr; gap:28px; }
+      .results-grid { grid-template-columns:1fr; gap:32px; }
+      .diag-form-panel, .diag-results-panel { padding:36px 28px; }
+    }
+    @media(max-width:768px) {
+      .scale-btn .sb-label { display:none; }
+      .scale-btn { padding:10px 4px; }
+      .diag-page-hero { padding:110px 0 60px; }
+      .hero-stats { gap:28px; }
+      .recs-grid { grid-template-columns:1fr; }
+      .rec-card-actions { flex-direction:column; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header id="header">
+  <div class="container header-container">
+    <a href="index.html" class="logo"><img src="/images/hezalogo.png" alt="Heza Coordination" class="logo-img"></a>
+    <button class="mobile-toggle" aria-label="Open menu"><span></span><span></span><span></span></button>
+    <ul class="header-nav">
+      <li><a href="index.html#home">Home</a></li>
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="index.html#services">Services</a></li>
+      <li><a href="index.html#values">Values</a></li>
+      <li><a href="index.html#story">Our Story</a></li>
+      <li class="nav-cta"><a href="#" class="book-cta" data-service="General Inquiry">Book a Consultation</a></li>
+    </ul>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="diag-page-hero">
+  <div class="container">
+    <a href="index.html#diagnostic" class="back-link"><i class="fas fa-arrow-left"></i> Back to Home</a>
+    <span class="eyebrow">Free Assessment Tool</span>
+    <h1>Transition Readiness Diagnostic</h1>
+    <p>Eight questions. Four pillars. An honest picture of where you stand — and where expert support makes the biggest difference.</p>
+    <div class="hero-stats">
+      <div class="hero-stat"><strong>8</strong><span>Questions</span></div>
+      <div class="hero-stat"><strong>4</strong><span>Key Pillars</span></div>
+      <div class="hero-stat"><strong>~3 min</strong><span>To Complete</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- TOOL -->
+<section class="diagnostic-page" id="diagnostic">
+  <div class="container">
+    <div class="diag-card">
+
+      <!-- FORM PANEL -->
+      <div class="diag-form-panel" id="diagFormPanel">
+        <div class="diag-intro">
+          <span class="eyebrow">How it works</span>
+          <h3>Rate your current level of preparation</h3>
+          <p>Select 1 (not started) through 4 (fully prepared) for each question. Your results reveal specific strengths and gaps — mapped visually so you can see exactly where to focus.</p>
+        </div>
+
+        <div class="diag-categories">
+
+          <div class="diag-cat-block">
+            <div class="diag-cat-heading"><span class="cat-icon">📋</span><h4>Planning</h4></div>
+            <div class="diag-question">
+              <label>Do you have a clear timeline with defined milestones?</label>
+              <div class="scale-row" data-cat="planning" data-q="0">
+                <button class="scale-btn" data-val="1"><span class="sb-num">1</span><span class="sb-label">Not Started</span></button>
+                <button class="scale-btn" data-val="2"><span class="sb-num">2</span><span class="sb-label">Early Stages</span></button>
+                <button class="scale-btn" data-val="3"><span class="sb-num">3</span><span class="sb-label">Mostly Ready</span></button>
+                <button class="scale-btn" data-val="4"><span class="sb-num">4</span><span class="sb-label">Fully Prepared</span></button>
+              </div>
+            </div>
+            <div class="diag-question">
+              <label>Have you identified and mapped all major tasks involved?</label>
+              <div class="scale-row" data-cat="planning" data-q="1">
+                <button class="scale-btn" data-val="1"><span class="sb-num">1</span><span class="sb-label">Not Started</span></button>
+                <button class="scale-btn" data-val="2"><span class="sb-num">2</span><span class="sb-label">Early Stages</span></button>
+                <button class="scale-btn" data-val="3"><span class="sb-num">3</span><span class="sb-label">Mostly Ready</span></button>
+                <button class="scale-btn" data-val="4"><span class="sb-num">4</span><span class="sb-label">Fully Prepared</span></button>
+              </div>
+            </div>
+          </div>
+
+          <div class="diag-cat-block">
+            <div class="diag-cat-heading"><span class="cat-icon">🚚</span><h4>Logistics</h4></div>
+            <div class="diag-question">
+              <label>Have you arranged or researched moving and transportation?</label>
+              <div class="scale-row" data-cat="logistics" data-q="0">
+                <button class="scale-btn" data-val="1"><span class="sb-num">1</span><span class="sb-label">Not Started</span></button>
+                <button class="scale-btn" data-val="2"><span class="sb-num">2</span><span class="sb-label">Early Stages</span></button>
+                <button class="scale-btn" data-val="3"><span class="sb-num">3</span><span class="sb-label">Mostly Ready</span></button>
+                <button class="scale-btn" data-val="4"><span class="sb-num">4</span><span class="sb-label">Fully Prepared</span></button>
+              </div>
+            </div>
+            <div class="diag-question">
+              <label>Have you planned for packing, supplies, and item handling?</label>
+              <div class="scale-row" data-cat="logistics" data-q="1">
+                <button class="scale-btn" data-val="1"><span class="sb-num">1</span><span class="sb-label">Not Started</span></button>
+                <button class="scale-btn" data-val="2"><span class="sb-num">2</span><span class="sb-label">Early Stages</span></button>
+                <button class="scale-btn" data-val="3"><span class="sb-num">3</span><span class="sb-label">Mostly Ready</span></button>
+                <button class="scale-btn" data-val="4"><span class="sb-num">4</span><span class="sb-label">Fully Prepared</span></button>
+              </div>
+            </div>
+          </div>
+
+          <div class="diag-cat-block">
+            <div class="diag-cat-heading"><span class="cat-icon">💰</span><h4>Budget &amp; Resources</h4></div>
+            <div class="diag-question">
+              <label>Do you have a realistic budget — including contingency funds?</label>
+              <div class="scale-row" data-cat="budget" data-q="0">
+                <button class="scale-btn" data-val="1"><span class="sb-num">1</span><span class="sb-label">Not Started</span></button>
+                <button class="scale-btn" data-val="2"><span class="sb-num">2</span><span class="sb-label">Early Stages</span></button>
+                <button class="scale-btn" data-val="3"><span class="sb-num">3</span><span class="sb-label">Mostly Ready</span></button>
+                <button class="scale-btn" data-val="4"><span class="sb-num">4</span><span class="sb-label">Fully Prepared</span></button>
+              </div>
+            </div>
+            <div class="diag-question">
+              <label>Have you confirmed or vetted the contractors you'll need?</label>
+              <div class="scale-row" data-cat="budget" data-q="1">
+                <button class="scale-btn" data-val="1"><span class="sb-num">1</span><span class="sb-label">Not Started</span></button>
+                <button class="scale-btn" data-val="2"><span class="sb-num">2</span><span class="sb-label">Early Stages</span></button>
+                <button class="scale-btn" data-val="3"><span class="sb-num">3</span><span class="sb-label">Mostly Ready</span></button>
+                <button class="scale-btn" data-val="4"><span class="sb-num">4</span><span class="sb-label">Fully Prepared</span></button>
+              </div>
+            </div>
+          </div>
+
+          <div class="diag-cat-block">
+            <div class="diag-cat-heading"><span class="cat-icon">🤝</span><h4>Coordination</h4></div>
+            <div class="diag-question">
+              <label>Are all household members, family, or stakeholders aligned?</label>
+              <div class="scale-row" data-cat="coordination" data-q="0">
+                <button class="scale-btn" data-val="1"><span class="sb-num">1</span><span class="sb-label">Not Started</span></button>
+                <button class="scale-btn" data-val="2"><span class="sb-num">2</span><span class="sb-label">Early Stages</span></button>
+                <button class="scale-btn" data-val="3"><span class="sb-num">3</span><span class="sb-label">Mostly Ready</span></button>
+                <button class="scale-btn" data-val="4"><span class="sb-num">4</span><span class="sb-label">Fully Prepared</span></button>
+              </div>
+            </div>
+            <div class="diag-question">
+              <label>Have you planned for disruption to daily routines or operations?</label>
+              <div class="scale-row" data-cat="coordination" data-q="1">
+                <button class="scale-btn" data-val="1"><span class="sb-num">1</span><span class="sb-label">Not Started</span></button>
+                <button class="scale-btn" data-val="2"><span class="sb-num">2</span><span class="sb-label">Early Stages</span></button>
+                <button class="scale-btn" data-val="3"><span class="sb-num">3</span><span class="sb-label">Mostly Ready</span></button>
+                <button class="scale-btn" data-val="4"><span class="sb-num">4</span><span class="sb-label">Fully Prepared</span></button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="diag-submit-row">
+          <button class="diag-submit" id="diagSubmit" disabled>
+            <i class="fas fa-chart-bar"></i> Assess My Readiness
+          </button>
+          <p class="diag-submit-note">Answer all 8 questions to unlock your results</p>
+        </div>
+      </div>
+
+      <!-- RESULTS PANEL -->
+      <div class="diag-results-panel" id="diagResultsPanel">
+        <div class="results-grid">
+          <div class="results-left">
+            <div class="score-ring-wrap">
+              <svg width="180" height="180" viewBox="0 0 180 180">
+                <circle class="score-ring-track" cx="90" cy="90" r="74"/>
+                <circle class="score-ring-fill" id="diagRingFill" cx="90" cy="90" r="74"
+                  transform="rotate(-90 90 90)" stroke-dasharray="465" stroke-dashoffset="465"/>
+              </svg>
+              <div class="score-ring-text-wrap">
+                <span class="score-pct" id="diagScorePct">—</span>
+                <span class="score-label-verdict" id="diagVerdict">Calculating…</span>
+                <p class="verdict-msg" id="diagVerdictMsg"></p>
+              </div>
+            </div>
+            <div class="cat-bars" id="diagCatBars"></div>
+          </div>
+          <div class="results-right">
+            <p class="chart-heading">Readiness by Pillar</p>
+            <canvas id="diagChart"></canvas>
+          </div>
+        </div>
+
+        <div class="recs-panel">
+          <h4>Recommended Services Based on Your Results</h4>
+          <div class="recs-grid" id="diagRecsGrid"></div>
+          <div class="diag-cta-row">
+            <button class="diag-retake" id="diagRetake">
+              <i class="fas fa-redo" style="margin-right:6px;font-size:0.8rem;"></i>Retake Assessment
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <h3 class="footer-heading">Heza Coordination</h3>
+        <p>We are here to carry the load so you don't have to. Specializing in consulting and coordinating both residential and professional transitions with care and expertise.</p>
+        <div>
+          <div class="footer-contact-item"><i class="fas fa-envelope"></i> info@hezacoordination.com</div>
+          <div class="footer-contact-item"><i class="fas fa-phone"></i> 613-501-9162</div>
+          <div class="footer-contact-item"><i class="fas fa-map-marker-alt"></i> Ottawa, Ontario</div>
+        </div>
+        <div class="social-row">
+          <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+      </div>
+      <div>
+        <h3 class="footer-heading">Quick Links</h3>
+        <ul class="footer-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="index.html#about">About</a></li>
+          <li><a href="index.html#services">Services</a></li>
+          <li><a href="index.html#values">Our Values</a></li>
+          <li><a href="index.html#story">Our Story</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="footer-heading">Services</h3>
+        <ul class="footer-links">
+          <li><a href="move-coordination.html">Move Coordination</a></li>
+          <li><a href="decluttering.html">Home Decluttering</a></li>
+          <li><a href="downsizing.html">Downsizing Assistance</a></li>
+          <li><a href="storage-organization.html">Storage Organization</a></li>
+          <li><a href="packing-supervision.html">Packing Supervision</a></li>
+          <li><a href="move-planning.html">Custom Planning</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 Heza Coordination. All rights reserved. Coordinating Life's Transitions With Care.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+<script>
+(function() {
+  const CATS = ['planning','logistics','budget','coordination'];
+  const CAT_LABELS = { planning:'Planning', logistics:'Logistics', budget:'Budget', coordination:'Coordination' };
+  const CAT_ICONS  = { planning:'📋', logistics:'🚚', budget:'💰', coordination:'🤝' };
+  const CAT_SERVICE = {
+    planning:     { icon:'💡', name:'Customized Move Planning',                    desc:'Build a clear, phased roadmap tailored to your timeline and goals.',                                  url:'move-planning.html',     svc:'Customized Move Planning' },
+    logistics:    { icon:'🌿', name:'Move Coordination',                           desc:'End-to-end oversight of your relocation — vetted movers, on-site supervision, zero stress.',         url:'move-coordination.html', svc:'Move Coordination' },
+    budget:       { icon:'📦', name:'Packing Supervision & Vendor Coordination',   desc:'We manage every vendor and contractor so nothing goes over budget or off schedule.',               url:'packing-supervision.html',svc:'Packing Supervision & Vendor Coordination' },
+    coordination: { icon:'🏡', name:'Downsizing & Transition Assistance',          desc:'Compassionate coordination across your household — everyone aligned, every step covered.',          url:'downsizing.html',        svc:'Downsizing & Transition Assistance' }
+  };
+
+  const answers    = { planning:[null,null], logistics:[null,null], budget:[null,null], coordination:[null,null] };
+  const submitBtn  = document.getElementById('diagSubmit');
+  const formPanel  = document.getElementById('diagFormPanel');
+  const resultsPanel = document.getElementById('diagResultsPanel');
+  let animFrame = null;
+
+  /* ── Radar chart ── */
+  function drawRadar(canvas, labels, values, maxVal) {
+    maxVal = maxVal || 4;
+    const dpr = window.devicePixelRatio || 1;
+    const size = 460;
+    canvas.width = size * dpr; canvas.height = size * dpr;
+    canvas.style.width = '100%'; canvas.style.maxWidth = size + 'px';
+    canvas.style.height = 'auto'; canvas.style.aspectRatio = '1';
+    const ctx = canvas.getContext('2d');
+    ctx.scale(dpr, dpr);
+    const cx = size/2, cy = size/2, r = size*0.25, n = labels.length;
+    const angleStep = (Math.PI*2)/n, startAngle = -Math.PI/2;
+    function pt(i, radius) { const a = startAngle+i*angleStep; return { x:cx+Math.cos(a)*radius, y:cy+Math.sin(a)*radius }; }
+    function drawStatic() {
+      for (let ring=1; ring<=maxVal; ring++) {
+        ctx.beginPath();
+        for (let i=0; i<n; i++) { const p=pt(i,r*ring/maxVal); i===0?ctx.moveTo(p.x,p.y):ctx.lineTo(p.x,p.y); }
+        ctx.closePath(); ctx.strokeStyle=ring===maxVal?'rgba(0,33,71,0.14)':'rgba(0,33,71,0.06)'; ctx.lineWidth=1; ctx.stroke();
+      }
+      for (let i=0; i<n; i++) { const p=pt(i,r); ctx.beginPath(); ctx.moveTo(cx,cy); ctx.lineTo(p.x,p.y); ctx.strokeStyle='rgba(0,33,71,0.09)'; ctx.lineWidth=1; ctx.stroke(); }
+      const labelRadius = r+40, fontSize = 14;
+      ctx.font=`700 ${fontSize}px Nunito, sans-serif`; ctx.fillStyle='#374151'; ctx.textBaseline='middle';
+      for (let i=0; i<n; i++) {
+        const a=startAngle+i*angleStep;
+        const lx=cx+Math.cos(a)*labelRadius, ly=cy+Math.sin(a)*labelRadius;
+        ctx.textAlign = Math.cos(a)>0.1?'left':Math.cos(a)<-0.1?'right':'center';
+        ctx.fillText(labels[i],lx,ly);
+      }
+    }
+    if (animFrame) cancelAnimationFrame(animFrame);
+    let progress = 0;
+    function animate() {
+      progress = Math.min(progress+0.045, 1);
+      const ease = 1-Math.pow(1-progress, 3);
+      ctx.clearRect(0,0,size,size); drawStatic();
+      ctx.beginPath();
+      for (let i=0; i<n; i++) { const v=Math.max(0.05,Math.min(values[i]*ease,maxVal)); const p=pt(i,r*v/maxVal); i===0?ctx.moveTo(p.x,p.y):ctx.lineTo(p.x,p.y); }
+      ctx.closePath(); ctx.fillStyle='rgba(58,123,213,0.15)'; ctx.fill();
+      ctx.strokeStyle='#3a7bd5'; ctx.lineWidth=2.5; ctx.lineJoin='round'; ctx.stroke();
+      for (let i=0; i<n; i++) {
+        const v=Math.max(0.05,Math.min(values[i]*ease,maxVal)); const p=pt(i,r*v/maxVal);
+        ctx.beginPath(); ctx.arc(p.x,p.y,5,0,Math.PI*2); ctx.fillStyle='#002147'; ctx.fill();
+        ctx.strokeStyle='#fff'; ctx.lineWidth=2; ctx.stroke();
+      }
+      if (progress<1) animFrame=requestAnimationFrame(animate);
+    }
+    animate();
+  }
+
+  /* ── Scale buttons ── */
+  document.querySelectorAll('.scale-row').forEach(row => {
+    const cat=row.dataset.cat, q=parseInt(row.dataset.q);
+    row.querySelectorAll('.scale-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        row.querySelectorAll('.scale-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        answers[cat][q] = parseInt(btn.dataset.val);
+        submitBtn.disabled = !CATS.every(c => answers[c][0]!==null && answers[c][1]!==null);
+      });
+    });
+  });
+
+  /* ── Submit ── */
+  submitBtn.addEventListener('click', () => {
+    const scores={};
+    CATS.forEach(c => { scores[c]=(answers[c][0]+answers[c][1])/2; });
+    const overall = CATS.reduce((s,c)=>s+scores[c],0)/4;
+    renderResults(scores, overall);
+  });
+
+  function renderResults(scores, overall) {
+    const pct = Math.round(((overall-1)/3)*100);
+    const circumference = 465;
+    setTimeout(() => { document.getElementById('diagRingFill').style.strokeDashoffset = circumference-(circumference*pct/100); }, 100);
+    document.getElementById('diagScorePct').textContent = pct+'%';
+    const fill = document.getElementById('diagRingFill');
+    fill.style.stroke = pct<40?'#ef4444':pct<65?'#f59e0b':pct<85?'#3b82f6':'#10b981';
+    const verdicts = [
+      { max:40, cls:'verdict-early',     label:'Early Stage',    msg:'Your transition needs significant groundwork. Several areas, without attention, could create real challenges on moving day. Let\'s build a solid foundation together.' },
+      { max:65, cls:'verdict-developing',label:'Developing',     msg:'You\'ve made a start, but key gaps remain that could lead to delays or added stress. Targeted support now will make a significant difference.' },
+      { max:85, cls:'verdict-ontrack',   label:'On Track',       msg:'You\'re well underway. A few focused improvements will sharpen your readiness and reduce the risk of last-minute surprises.' },
+      { max:101,cls:'verdict-prepared',  label:'Well Prepared',  msg:'You\'re in excellent shape. Our team can handle the operational details so you can step into your next chapter with total confidence.' }
+    ];
+    const v = verdicts.find(x => pct < x.max);
+    const verdictEl = document.getElementById('diagVerdict');
+    verdictEl.textContent = v.label; verdictEl.className='score-label-verdict '+v.cls;
+    document.getElementById('diagVerdictMsg').textContent = v.msg;
+
+    const barsEl = document.getElementById('diagCatBars');
+    barsEl.innerHTML = '';
+    CATS.forEach(c => {
+      const pctCat=Math.round(((scores[c]-1)/3)*100), isWeak=pctCat<50, isCrit=pctCat<33;
+      barsEl.innerHTML += `<div class="cat-bar-item"><div class="cat-bar-header"><span class="cat-bar-name">${CAT_ICONS[c]} ${CAT_LABELS[c]}</span><span class="cat-bar-score">${pctCat}%</span></div><div class="cat-bar-track"><div class="cat-bar-fill ${isCrit?'critical':isWeak?'weak':''}" style="width:0%" data-w="${pctCat}%"></div></div></div>`;
+    });
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{ barsEl.querySelectorAll('.cat-bar-fill').forEach(b=>{b.style.width=b.dataset.w;}); }));
+
+    resultsPanel.classList.add('visible');
+    setTimeout(()=>resultsPanel.scrollIntoView({behavior:'smooth',block:'nearest'}), 80);
+    requestAnimationFrame(()=>drawRadar(document.getElementById('diagChart'), CATS.map(c=>CAT_LABELS[c]), CATS.map(c=>scores[c])));
+
+    const sorted=[...CATS].sort((a,b)=>scores[a]-scores[b]);
+    const recsEl=document.getElementById('diagRecsGrid');
+    recsEl.innerHTML='';
+    sorted.slice(0,2).forEach((c,i) => {
+      const svc=CAT_SERVICE[c];
+      recsEl.innerHTML += `
+        <div class="rec-card ${i===0?'primary':''}">
+          <div class="rec-card-top">
+            <div class="rec-icon">${svc.icon}</div>
+            <div class="rec-body">
+              <h5>${svc.name}</h5>
+              <p>${svc.desc}</p>
+              ${i===0?'<span class="rec-badge">Top Match</span>':''}
+            </div>
+          </div>
+          <div class="rec-card-actions">
+            <button class="rec-btn-book book-cta" data-service="${svc.svc}">
+              <i class="fas fa-calendar-check" style="margin-right:5px;font-size:0.75rem;"></i>Book This Service
+            </button>
+            <a href="${svc.url}" class="rec-btn-view">
+              View Service <i class="fas fa-arrow-right" style="font-size:0.7rem;"></i>
+            </a>
+          </div>
+        </div>`;
+    });
+    recsEl.querySelectorAll('.rec-btn-book').forEach(btn => {
+      btn.addEventListener('click', e => {
+        e.preventDefault();
+        const sel=document.getElementById('mService');
+        if (sel) sel.value=btn.dataset.service||'';
+        document.getElementById('bookingModal')?.classList.add('open');
+        document.body.style.overflow='hidden';
+        document.querySelectorAll('.form-step').forEach(s=>s.classList.remove('active'));
+        document.getElementById('modalStep1')?.classList.add('active');
+        document.querySelectorAll('.progress-dot,.progress-label').forEach(el=>{el.classList.remove('active','done');if(parseInt(el.dataset.step)===1)el.classList.add('active');});
+        document.getElementById('modalBack').style.display='none';
+        document.getElementById('modalNext').innerHTML='Continue <i class="fas fa-arrow-right"></i>';
+      });
+    });
+  }
+
+  /* ── Retake ── */
+  document.getElementById('diagRetake')?.addEventListener('click', () => {
+    CATS.forEach(c=>{answers[c]=[null,null];});
+    document.querySelectorAll('.scale-btn').forEach(b=>b.classList.remove('active'));
+    document.getElementById('diagRingFill').style.strokeDashoffset=465;
+    document.getElementById('diagCatBars').innerHTML='';
+    document.getElementById('diagRecsGrid').innerHTML='';
+    submitBtn.disabled=true;
+    resultsPanel.classList.remove('visible');
+    formPanel.scrollIntoView({behavior:'smooth',block:'start'});
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,169 @@
+═══ TRANSITION READINESS DIAGNOSTIC ═══
+<section class="diagnostic" id="diagnostic">
+  <div class="container">
+    <div class="section-title">
+      <span class="section-eyebrow" style="display:inline-block;font-size:0.72rem;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:#3a7bd5;margin-bottom:10px;">Free Assessment</span>
+      <h2>Transition Readiness Diagnostic</h2>
+      <p>Eight questions. Four pillars. An honest picture of where you stand — and where expert support makes the biggest difference.</p>
+    </div>
+
+    <div class="diag-card">
+
+      <!-- ── FORM PANEL ── -->
+      <div class="diag-form-panel" id="diagFormPanel">
+        <div class="diag-intro">
+          <span class="eyebrow">How it works</span>
+          <h3>Rate your current level of preparation</h3>
+          <p>Select 1 (not started) through 4 (fully prepared) for each question. Your results will reveal specific strengths and gaps — mapped visually so you can see exactly where to focus.</p>
+        </div>
+
+        <div class="diag-categories">
+
+          <!-- PLANNING -->
+          <div class="diag-cat-block">
+            <div class="diag-cat-heading"><span class="cat-icon">📋</span><h4>Planning</h4></div>
+            <div class="diag-question">
+              <label>Do you have a clear timeline with defined milestones?</label>
+              <div class="scale-row" data-cat="planning" data-q="0">
+                <button class="scale-btn" data-val="1"><span class="sb-num">1</span><span class="sb-label">Not Started</span></button>
+                <button class="scale-btn" data-val="2"><span class="sb-num">2</span><span class="sb-label">Early Stages</span></button>
+                <button class="scale-btn" data-val="3"><span class="sb-num">3</span><span class="sb-label">Mostly Ready</span></button>
+                <button class="scale-btn" data-val="4"><span class="sb-num">4</span><span class="sb-label">Fully Prepared</span></button>
+              </div>
+            </div>
+            <div class="diag-question">
+              <label>Have you identified and mapped all major tasks involved?</label>
+              <div class="scale-row" data-cat="planning" data-q="1">
+                <button class="scale-btn" data-val="1"><span class="sb-num">1</span><span class="sb-label">Not Started</span></button>
+                <button class="scale-btn" data-val="2"><span class="sb-num">2</span><span class="sb-label">Early Stages</span></button>
+                <button class="scale-btn" data-val="3"><span class="sb-num">3</span><span class="sb-label">Mostly Ready</span></button>
+                <button class="scale-btn" data-val="4"><span class="sb-num">4</span><span class="sb-label">Fully Prepared</span></button>
+              </div>
+            </div>
+          </div>
+
+          <!-- LOGISTICS -->
+          <div class="diag-cat-block">
+            <div class="diag-cat-heading"><span class="cat-icon">🚚</span><h4>Logistics</h4></div>
+            <div class="diag-question">
+              <label>Have you arranged or researched moving and transportation?</label>
+              <div class="scale-row" data-cat="logistics" data-q="0">
+                <button class="scale-btn" data-val="1"><span class="sb-num">1</span><span class="sb-label">Not Started</span></button>
+                <button class="scale-btn" data-val="2"><span class="sb-num">2</span><span class="sb-label">Early Stages</span></button>
+                <button class="scale-btn" data-val="3"><span class="sb-num">3</span><span class="sb-label">Mostly Ready</span></button>
+                <button class="scale-btn" data-val="4"><span class="sb-num">4</span><span class="sb-label">Fully Prepared</span></button>
+              </div>
+            </div>
+            <div class="diag-question">
+              <label>Have you planned for packing, supplies, and item handling?</label>
+              <div class="scale-row" data-cat="logistics" data-q="1">
+                <button class="scale-btn" data-val="1"><span class="sb-num">1</span><span class="sb-label">Not Started</span></button>
+                <button class="scale-btn" data-val="2"><span class="sb-num">2</span><span class="sb-label">Early Stages</span></button>
+                <button class="scale-btn" data-val="3"><span class="sb-num">3</span><span class="sb-label">Mostly Ready</span></button>
+                <button class="scale-btn" data-val="4"><span class="sb-num">4</span><span class="sb-label">Fully Prepared</span></button>
+              </div>
+            </div>
+          </div>
+
+          <!-- BUDGET -->
+          <div class="diag-cat-block">
+            <div class="diag-cat-heading"><span class="cat-icon">💰</span><h4>Budget &amp; Resources</h4></div>
+            <div class="diag-question">
+              <label>Do you have a realistic budget — including contingency funds?</label>
+              <div class="scale-row" data-cat="budget" data-q="0">
+                <button class="scale-btn" data-val="1"><span class="sb-num">1</span><span class="sb-label">Not Started</span></button>
+                <button class="scale-btn" data-val="2"><span class="sb-num">2</span><span class="sb-label">Early Stages</span></button>
+                <button class="scale-btn" data-val="3"><span class="sb-num">3</span><span class="sb-label">Mostly Ready</span></button>
+                <button class="scale-btn" data-val="4"><span class="sb-num">4</span><span class="sb-label">Fully Prepared</span></button>
+              </div>
+            </div>
+            <div class="diag-question">
+              <label>Have you confirmed or vetted the contractors you'll need?</label>
+              <div class="scale-row" data-cat="budget" data-q="1">
+                <button class="scale-btn" data-val="1"><span class="sb-num">1</span><span class="sb-label">Not Started</span></button>
+                <button class="scale-btn" data-val="2"><span class="sb-num">2</span><span class="sb-label">Early Stages</span></button>
+                <button class="scale-btn" data-val="3"><span class="sb-num">3</span><span class="sb-label">Mostly Ready</span></button>
+                <button class="scale-btn" data-val="4"><span class="sb-num">4</span><span class="sb-label">Fully Prepared</span></button>
+              </div>
+            </div>
+          </div>
+
+          <!-- COORDINATION -->
+          <div class="diag-cat-block">
+            <div class="diag-cat-heading"><span class="cat-icon">🤝</span><h4>Coordination</h4></div>
+            <div class="diag-question">
+              <label>Are all household members, family, or team stakeholders aligned?</label>
+              <div class="scale-row" data-cat="coordination" data-q="0">
+                <button class="scale-btn" data-val="1"><span class="sb-num">1</span><span class="sb-label">Not Started</span></button>
+                <button class="scale-btn" data-val="2"><span class="sb-num">2</span><span class="sb-label">Early Stages</span></button>
+                <button class="scale-btn" data-val="3"><span class="sb-num">3</span><span class="sb-label">Mostly Ready</span></button>
+                <button class="scale-btn" data-val="4"><span class="sb-num">4</span><span class="sb-label">Fully Prepared</span></button>
+              </div>
+            </div>
+            <div class="diag-question">
+              <label>Have you planned for disruption to daily routines or operations?</label>
+              <div class="scale-row" data-cat="coordination" data-q="1">
+                <button class="scale-btn" data-val="1"><span class="sb-num">1</span><span class="sb-label">Not Started</span></button>
+                <button class="scale-btn" data-val="2"><span class="sb-num">2</span><span class="sb-label">Early Stages</span></button>
+                <button class="scale-btn" data-val="3"><span class="sb-num">3</span><span class="sb-label">Mostly Ready</span></button>
+                <button class="scale-btn" data-val="4"><span class="sb-num">4</span><span class="sb-label">Fully Prepared</span></button>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /diag-categories -->
+
+        <div class="diag-submit-row">
+          <button class="diag-submit" id="diagSubmit" disabled>
+            <i class="fas fa-chart-radar" style="font-size:0.95rem"></i> Assess My Readiness
+          </button>
+          <p class="diag-submit-note">Answer all 8 questions to unlock your results</p>
+        </div>
+      </div><!-- /diag-form-panel -->
+
+      <!-- ── RESULTS PANEL ── -->
+      <div class="diag-results-panel" id="diagResultsPanel">
+        <div class="results-grid">
+
+          <!-- Left: score ring + bars -->
+          <div class="results-left">
+            <div class="score-ring-wrap">
+              <svg width="180" height="180" viewBox="0 0 180 180">
+                <circle class="score-ring-track" cx="90" cy="90" r="74"/>
+                <circle class="score-ring-fill" id="diagRingFill" cx="90" cy="90" r="74"
+                  transform="rotate(-90 90 90)"
+                  stroke-dasharray="465"
+                  stroke-dashoffset="465"/>
+              </svg>
+              <div class="score-ring-text-wrap">
+                <span class="score-pct" id="diagScorePct">—</span>
+                <span class="score-label-verdict" id="diagVerdict">Calculating…</span>
+                <p class="verdict-msg" id="diagVerdictMsg"></p>
+              </div>
+            </div>
+            <div class="cat-bars" id="diagCatBars"></div>
+          </div>
+
+          <!-- Right: radar chart -->
+          <div class="results-right">
+            <p class="chart-heading">Readiness by Pillar</p>
+            <canvas id="diagChart"></canvas>
+          </div>
+
+        </div>
+
+        <!-- Recommendations -->
+        <div class="recs-panel">
+          <h4>Recommended Services Based on Your Results</h4>
+          <div class="recs-grid" id="diagRecsGrid"></div>
+          <div class="diag-cta-row">
+            <a href="diagnostic.html" class="diag-tool-link">
+              <i class="fas fa-chart-bar" style="font-size:0.8rem;"></i> Take the Full Assessment
+            </a>
+          </div>
+        </div>
+      </div><!-- /diag-results-panel -->
+
+    </div><!-- /diag-card -->
+  </div>
+</section>
