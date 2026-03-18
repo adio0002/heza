@@ -2,7 +2,7 @@
    HEZA COORDINATION — SHARED STYLESHEET
    ============================================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Nunito:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Michroma&display=swap');
 
 :root {
   --navy:        #002147;
@@ -18,7 +18,7 @@
   --border:      #e2e8f0;
 
   --ff-display: 'Cormorant Garamond', Georgia, serif;
-  --ff-body:    'Nunito', system-ui, sans-serif;
+  --ff-body:    'Michroma', system-ui, sans-serif;
 
   --ease:        cubic-bezier(0.4, 0, 0.2, 1);
   --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -44,11 +44,13 @@ body {
   font-family: var(--ff-body);
   color: var(--text);
   background: var(--white);
-  line-height: 1.6;
+  line-height: 1.75;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
+  font-size: 0.93rem;
+  letter-spacing: 0.01em;
 }
-h1,h2,h3,h4,h5 { font-family: var(--ff-body); line-height: 1.15; font-weight: 600; }
+h1,h2,h3,h4,h5 { font-family: var(--ff-body); line-height: 1.2; font-weight: 400; letter-spacing: -0.01em; }
 a { color: var(--blue); text-decoration: none; transition: var(--t); }
 img { max-width: 100%; display: block; }
 
@@ -437,6 +439,13 @@ img { max-width: 100%; display: block; }
 .quiz-step-counter { font-size:0.78rem; color:rgba(255,255,255,0.35); }
 @media(max-width:992px) { .quiz-wrapper { height:auto; min-height:420px; } }
 @media(max-width:480px) { .quiz-inner { padding:22px 20px 18px; } .quiz-title { font-size:1.3rem; } }
+.quiz-wrapper { height:520px; }
+.quiz-full-assess-link {
+  display:inline-flex; align-items:center; gap:6px; margin-top:14px;
+  font-size:0.68rem; color:rgba(255,255,255,0.5); text-decoration:none;
+  letter-spacing:0.5px; transition:color 0.22s ease;
+}
+.quiz-full-assess-link:hover { color:rgba(255,255,255,0.88); }
  
 
 /* ===== UTILS ===== */
