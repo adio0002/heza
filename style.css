@@ -17,7 +17,7 @@
   --text-muted:  #64748b;
   --border:      #e2e8f0;
 
-  --ff-display: 'Cormorant Garamond', Georgia, serif;
+  --ff-display: 'Michroma', Georgia, serif;
   --ff-body:    'Michroma', system-ui, sans-serif;
 
   --ease:        cubic-bezier(0.4, 0, 0.2, 1);
@@ -50,7 +50,7 @@ body {
   font-size: 0.93rem;
   letter-spacing: 0.01em;
 }
-h1,h2,h3,h4,h5 { font-family: var(--ff-body); line-height: 1.2; font-weight: 400; letter-spacing: -0.01em; }
+h1,h2,h3,h4,h5 { font-family: 'Michroma', system-ui, sans-serif; line-height: 1.2; font-weight: 400; letter-spacing: -0.01em; }
 a { color: var(--blue); text-decoration: none; transition: var(--t); }
 img { max-width: 100%; display: block; }
 
@@ -117,8 +117,8 @@ img { max-width: 100%; display: block; }
 /* ===== FOOTER ===== */
 .site-footer { background: #0c1117; color: rgba(255,255,255,0.7); padding: 80px 0 28px; }
 .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 60px; margin-bottom: 55px; }
-.footer-brand p { font-size: 0.88rem; line-height: 1.8; color: rgba(255,255,255,0.55); margin-bottom: 22px; }
-.footer-contact-item { display: flex; align-items: center; gap: 10px; font-size: 0.88rem; margin-bottom: 9px; }
+.footer-brand p { font-family: 'Nunito', sans-serif; font-size: 0.88rem; line-height: 1.8; color: rgba(255,255,255,0.55); margin-bottom: 22px; }
+.footer-contact-item { display: flex; align-items: center; gap: 10px; font-family: 'Nunito', sans-serif; font-size: 0.88rem; margin-bottom: 9px; }
 .footer-contact-item i { color: var(--blue); width: 15px; flex-shrink: 0; }
 .footer-heading {
   font-family: var(--ff-body); font-size: 1.25rem; font-weight: 600; color: var(--white);
@@ -127,7 +127,7 @@ img { max-width: 100%; display: block; }
 .footer-heading::after { content:''; position:absolute; bottom:0; left:0; width:28px; height:2px; background: var(--blue); }
 .footer-links { list-style: none; }
 .footer-links li { margin-bottom: 9px; }
-.footer-links li a { font-size: 0.88rem; color: rgba(255,255,255,0.5); transition: var(--t); }
+.footer-links li a { font-family: 'Nunito', sans-serif; font-size: 0.88rem; color: rgba(255,255,255,0.5); transition: var(--t); }
 .footer-links li a:hover { color: var(--white); padding-left: 5px; }
 .social-row { display: flex; gap: 10px; margin-top: 22px; }
 .social-icon {
@@ -168,7 +168,7 @@ img { max-width: 100%; display: block; }
   font-family: var(--ff-display); font-size: 1.75rem; font-weight: 600;
   color: var(--white); margin-bottom: 3px;
 }
-.modal-header-text p { font-size: 0.85rem; color: rgba(255,255,255,0.62); margin: 0; }
+.modal-header-text p { font-family: 'Nunito', sans-serif; font-size: 0.85rem; color: rgba(255,255,255,0.62); margin: 0; }
 .modal-close {
   position: absolute; top: 14px; right: 14px;
   width: 30px; height: 30px; border-radius: 50%;
@@ -239,7 +239,7 @@ img { max-width: 100%; display: block; }
   margin: 0 auto 18px; font-size: 1.9rem; color: var(--white);
 }
 .success-step h3 { font-family: var(--ff-display); font-size: 1.7rem; color: var(--navy); margin-bottom: 10px; }
-.success-step p { color: var(--text-muted); font-size: 0.9rem; line-height: 1.65; margin-bottom: 5px; }
+.success-step p { font-family: 'Nunito', sans-serif; color: var(--text-muted); font-size: 0.9rem; line-height: 1.65; margin-bottom: 5px; }
 
 /* ===== SERVICE HERO ===== */
 .service-hero {
@@ -281,7 +281,7 @@ img { max-width: 100%; display: block; }
   font-weight: 700; color: var(--white); margin-bottom: 18px; line-height: 1.1;
 }
 .service-hero .hero-subtitle {
-  font-size: 1.1rem; color: rgba(255,255,255,0.72);
+  font-family: 'Nunito', sans-serif; font-size: 1.1rem; color: rgba(255,255,255,0.72);
   max-width: 580px; margin-bottom: 32px; line-height: 1.75;
   font-weight: 300;
 }
@@ -290,7 +290,7 @@ img { max-width: 100%; display: block; }
 /* ===== SERVICE BODY ===== */
 .service-intro { padding: 72px 0 40px; }
 .lead-text {
-  font-size: 1.1rem; color: var(--text-muted); line-height: 1.9;
+  font-family: 'Nunito', sans-serif; font-size: 1.1rem; color: var(--text-muted); line-height: 1.9;
   max-width: 820px; border-left: 3px solid var(--blue); padding-left: 22px;
 }
 
@@ -326,12 +326,12 @@ img { max-width: 100%; display: block; }
 }
 .timeline-card:hover { box-shadow: var(--shadow-sm); transform: translateX(5px); border-color: rgba(58,123,213,0.2); }
 .timeline-card h3 {
-  font-family: var(--ff-body); font-size: 1.28rem; color: var(--navy); margin-bottom: 13px;
+  font-family: 'Michroma'; font-size: 1.28rem; color: var(--navy); margin-bottom: 13px;
 }
 .timeline-card ul { list-style: none; padding: 0; margin-bottom: 14px; }
 .timeline-card ul li {
   padding: 4px 0 4px 22px; position: relative;
-  font-size: 0.92rem; color: var(--text-muted); line-height: 1.6;
+  font-family: 'Nunito', sans-serif; font-size: 0.92rem; color: var(--text-muted); line-height: 1.6;
 }
 .timeline-card ul li::before {
   content: '→'; position: absolute; left: 0;
@@ -354,7 +354,7 @@ img { max-width: 100%; display: block; }
   font-size: 14rem; color: rgba(255,255,255,0.03); font-family: serif; line-height: 1; pointer-events: none;
 }
 .outcome-card h2 { font-family: var(--ff-display); font-size: 2rem; color: var(--white); margin-bottom: 14px; }
-.outcome-card p { font-size: 1.02rem; color: rgba(255,255,255,0.78); line-height: 1.85; max-width: 720px; }
+.outcome-card p { font-family: 'Nunito', sans-serif; font-size: 1.02rem; color: rgba(255,255,255,0.78); line-height: 1.85; max-width: 720px; }
 
 /* Other services */
 .other-services { padding: 80px 0; background: var(--off-white); }
@@ -377,7 +377,7 @@ img { max-width: 100%; display: block; }
 }
 .service-cta-banner .container { position: relative; z-index: 1; }
 .service-cta-banner h2 { font-family: var(--ff-display); font-size: clamp(1.8rem, 3vw, 2.5rem); color: var(--white); margin-bottom: 14px; }
-.service-cta-banner p { color: rgba(255,255,255,0.72); max-width: 520px; margin: 0 auto 32px; font-size: 1rem; }
+.service-cta-banner p { font-family: 'Nunito', sans-serif; color: rgba(255,255,255,0.72); max-width: 520px; margin: 0 auto 32px; font-size: 1rem; }
 .cta-btn-row { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
 
 /* ===== SERVICE FINDER QUESTIONNAIRE ===== */
@@ -436,6 +436,8 @@ img { max-width: 100%; display: block; }
 .quiz-nav { display:flex; align-items:center; justify-content:space-between; margin-top:14px; }
 .quiz-back { background:none; border:none; color:rgba(255,255,255,0.4); font-family:var(--ff-body); font-size:0.82rem; cursor:pointer; padding:0; transition:var(--t); }
 .quiz-back:hover { color:rgba(255,255,255,0.8); }
+.quiz-diagnostic-link { display:inline-flex; align-items:center; gap:6px; font-size:0.82rem; font-weight:600; color:rgba(255,255,255,0.85); text-decoration:underline; text-decoration-thickness:1.5px; text-underline-offset:4px; cursor:pointer; transition:var(--t); padding:4px 8px; border-radius:4px; }
+.quiz-diagnostic-link:hover { color:var(--white); background:rgba(255,255,255,0.1); text-decoration-thickness:2px; }
 .quiz-step-counter { font-size:0.78rem; color:rgba(255,255,255,0.35); }
 @media(max-width:992px) { .quiz-wrapper { height:auto; min-height:420px; } }
 @media(max-width:480px) { .quiz-inner { padding:22px 20px 18px; } .quiz-title { font-size:1.3rem; } }
@@ -486,5 +488,5 @@ img { max-width: 100%; display: block; }
 /* ===== OUR STORY — preserve Cormorant Garamond ===== */
 .story,
 .story * { font-family: 'Cormorant Garamond', Georgia, serif; }
-.story p { font-size: 1.18rem; line-height: 1.9; }
+.story p { font-family: 'Nunito', sans-serif; font-size: 1.18rem; line-height: 1.9; }
 .story .story-sig { font-weight: 700; font-style: italic; }

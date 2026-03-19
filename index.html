@@ -24,8 +24,8 @@
     .carousel-slide.active { opacity:1; }
     .carousel-slide .slide-overlay { position:absolute; inset:0; background:rgba(0,0,0,0.58); display:flex; align-items:center; justify-content:center; text-align:center; }
     .slide-content { max-width: 860px; padding: 0 24px; z-index:2; animation: fadeInUp 0.9s ease-out both; }
-    .slide-content h1 { font-family: var(--ff-body); font-size:clamp(2.4rem,5vw,4rem); color:#fff; margin-bottom:18px; font-weight:700; line-height:1.1; text-shadow:0 2px 12px rgba(0,0,0,0.35); }
-    .slide-content p { font-size:1.15rem; color:rgba(255,255,255,0.88); margin-bottom:36px; line-height:1.7; }
+    .slide-content h1 { font-family: 'Michroma'; font-size:clamp(2.4rem,5vw,4rem); color:#fff; margin-bottom:18px; font-weight:700; line-height:1.1; text-shadow:0 2px 12px rgba(0,0,0,0.35); }
+    .slide-content p { font-family: 'Nunito', sans-serif; font-size:1.15rem; color:rgba(255,255,255,0.88); margin-bottom:36px; line-height:1.7; }
     .hero-btns { display:flex; justify-content:center; gap:16px; flex-wrap:wrap; }
     .hero-btns .btn { min-width:210px; font-size:1rem; }
 
@@ -47,8 +47,8 @@
     .about { background:#f8f9fc; padding:100px 0; }
     .about-content { max-width:100%; display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:start; }
     .about-text h2 { font-family:'Michroma',serif; font-size:2.2rem; color:#002147; margin-bottom:22px; line-height:1.2; }
-    .about-text p { font-size:1rem; line-height:1.85; margin-bottom:18px; color:#454c5a; }
-    .about-text .intro-highlight { font-size:1.08rem; font-weight:500; color:#002147; border-left:4px solid #3a7bd5; padding-left:20px; margin:24px 0; font-style:italic; line-height:1.75; }
+    .about-text p { font-family: 'Nunito', sans-serif; font-size:1rem; line-height:1.85; margin-bottom:18px; color:#454c5a; }
+    .about-text .intro-highlight { font-family: 'Nunito', sans-serif; font-size:1.08rem; font-weight:500; color:#002147; border-left:4px solid #3a7bd5; padding-left:20px; margin:24px 0; font-style:italic; line-height:1.75; }
 
     /* ═══ DIAGNOSTIC SECTION ═══ */
     .diagnostic { background: #f0f4fa; padding: 100px 0; }
@@ -58,13 +58,13 @@
     .diag-form-panel { padding: 52px 56px; }
     .diag-intro { margin-bottom:44px; }
     .diag-intro .eyebrow { font-size:0.72rem; font-weight:700; letter-spacing:2.5px; text-transform:uppercase; color:#3a7bd5; display:block; margin-bottom:10px; }
-    .diag-intro h3 { font-family:'Nunito',sans-serif; font-size:1.75rem; color:#002147; margin:0 0 10px; }
+    .diag-intro h3 { font-family:'Michroma',sans-serif; font-size:1.75rem; color:#002147; margin:0 0 10px; }
     .diag-intro p { color:#64748b; font-size:0.95rem; line-height:1.7; margin:0; }
     .diag-categories { display:grid; grid-template-columns:1fr 1fr; gap:36px 48px; margin-bottom:40px; }
     .diag-cat-block { }
     .diag-cat-heading { display:flex; align-items:center; gap:10px; margin-bottom:20px; padding-bottom:10px; border-bottom:2px solid #e8f0fe; }
     .diag-cat-heading .cat-icon { font-size:1.25rem; }
-    .diag-cat-heading h4 { font-family:'Nunito',sans-serif; font-size:0.95rem; font-weight:700; color:#002147; margin:0; letter-spacing:0.5px; text-transform:uppercase; }
+    .diag-cat-heading h4 { font-family:'Michroma',sans-serif; font-size:0.95rem; font-weight:700; color:#002147; margin:0; letter-spacing:0.5px; text-transform:uppercase; }
     .diag-question { margin-bottom:22px; }
     .diag-question label { display:block; font-size:0.88rem; font-weight:500; color:#374151; margin-bottom:11px; line-height:1.5; }
     .scale-row { display:grid; grid-template-columns:repeat(4,1fr); gap:6px; }
@@ -184,7 +184,7 @@
     /* Services */
     .services { padding:100px 0; background:#fff; }
     .section-title { text-align:center; margin-bottom:55px; }
-    .section-title h2 { font-family:'Nunito',serif; font-size:2.5rem; color:#002147; position:relative; display:inline-block; padding-bottom:14px; }
+    .section-title h2 { font-family:'Michroma',serif; font-size:2.5rem; color:#002147; position:relative; display:inline-block; padding-bottom:14px; }
     .section-title h2:after { content:''; position:absolute; bottom:0; left:50%; transform:translateX(-50%); width:60px; height:3px; background:#3a7bd5; border-radius:2px; }
     .section-title p { margin-top:14px; color:#64748b; font-size:1rem; }
     .services-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:32px; }
@@ -196,8 +196,8 @@
     .service-card:hover p { color:rgba(255,255,255,0.85); }
     .service-icon { font-size:2.8rem; margin-bottom:20px; display:block; transition:transform 0.3s; }
     .service-card:hover .service-icon { transform:scale(1.15); }
-    .service-card h3 { font-family:'Nunito',serif; font-size:1.5rem; color:#002147; margin-bottom:14px; transition:color 0.3s; }
-    .service-card p { font-size:0.92rem; color:#64748b; line-height:1.7; margin:0; transition:color 0.3s; }
+    .service-card h3 { font-family:'Michroma',serif; font-size:1.5rem; color:#002147; margin-bottom:14px; transition:color 0.3s; }
+    .service-card p { font-family: 'Nunito', sans-serif; font-size:0.92rem; color:#64748b; line-height:1.7; margin:0; transition:color 0.3s; }
 
     /* Values */
     .values { background:linear-gradient(rgba(0,0,0,0.3),rgba(0,0,0,0.3)),url('images/values.jpg'); background-size:cover; background-position:center; padding:100px 0; }
@@ -212,23 +212,23 @@
     .flip-card-front { background:#fff; color:#002147; }
     .flip-card-back { background:linear-gradient(135deg,#002147,#3a7bd5); color:#fff; transform:rotateY(180deg); }
     .value-icon { font-size:2.8rem; margin-bottom:16px; color:#002147; }
-    .flip-card-front h3 { font-family:'Nunito',serif; font-size:1.4rem; margin-bottom:10px; }
+    .flip-card-front h3 { font-family:'Michroma',serif; font-size:1.4rem; margin-bottom:10px; }
     .flip-card-front p { font-size:0.85rem; color:#94a3b8; }
-    .flip-card-back h3 { font-family:'Nunito',serif; font-size:1.4rem; color:#fff; margin-bottom:12px; }
+    .flip-card-back h3 { font-family:'Michroma',serif; font-size:1.4rem; color:#fff; margin-bottom:12px; }
     .flip-card-back p { font-size:0.9rem; line-height:1.65; }
 
     /* Story */
     .story { padding:100px 0; background:#fff; }
     .story-content { max-width:860px; margin:0 auto; text-align:center; position:relative; }
     .story-content::before { content:'"'; position:absolute; top:-60px; left:50%; transform:translateX(-50%); font-size:9rem; color:#e8f0fe; z-index:-1; font-family:'Cormorant Garamond',serif; line-height:1; }
-    .story-content p { font-size:1.12rem; margin-bottom:26px; line-height:1.85; color:#454c5a; }
-    .story-content .story-sig { font-family:'Cormorant Garamond',serif; font-weight:700; color:#002147; font-size:1.15rem; margin-top:30px; font-style:italic; }
+    .story-content p { font-size:1.16rem; margin-bottom:26px; line-height:1.85; color:#454c5a; }
+    .story-content .story-sig { font-family:'Nunito',serif; font-weight:700; color:#002147; font-size:1.15rem; margin-top:30px; font-style:italic; }
 
     /* CTA */
     .cta { background:linear-gradient(135deg,#002147 0%,#3a7bd5 100%); color:#fff; text-align:center; padding:100px 0; position:relative; overflow:hidden; }
     .cta::before { content:''; position:absolute; inset:0; background-image:linear-gradient(rgba(255,255,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.03) 1px,transparent 1px); background-size:50px 50px; }
     .cta .container { position:relative; z-index:1; }
-    .cta h2 { font-family:'Nunito',serif; color:#fff; font-size:2.6rem; margin-bottom:16px; }
+    .cta h2 { font-family:'Michroma',serif; color:#fff; font-size:2.6rem; margin-bottom:16px; }
     .cta p { max-width:620px; margin:0 auto 36px; color:rgba(255,255,255,0.8); font-size:1.08rem; }
     .cta-btns { display:flex; justify-content:center; gap:16px; flex-wrap:wrap; }
 
@@ -387,6 +387,9 @@
             <div class="quiz-nav">
               <span></span>
               <span class="quiz-step-counter">Step 1 of 3</span>
+              <a href="diagnostic.html" class="quiz-diagnostic-link" title="Skip to full diagnostic assessment">
+                <i class="fas fa-chart-pie"></i> Full Diagnostic
+              </a>
             </div>
           </div>
  
@@ -402,6 +405,9 @@
             <div class="quiz-nav">
               <button class="quiz-back" id="quizBack2">← Back</button>
               <span class="quiz-step-counter">Step 2 of 3</span>
+              <a href="diagnostic.html" class="quiz-diagnostic-link" title="Skip to full diagnostic assessment">
+                <i class="fas fa-chart-pie"></i> Full Diagnostic
+              </a>
             </div>
           </div>
  
@@ -416,6 +422,9 @@
             <div class="quiz-nav">
               <button class="quiz-back" id="quizBack3">← Back</button>
               <span class="quiz-step-counter">Step 3 of 3</span>
+              <a href="diagnostic.html" class="quiz-diagnostic-link" title="Skip to full diagnostic assessment">
+                <i class="fas fa-chart-pie"></i> Full Diagnostic
+              </a>
             </div>
           </div>
  
