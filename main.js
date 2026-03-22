@@ -278,8 +278,20 @@ Submitted from hezacoordination.com`;
     const navList = document.querySelector('.header-nav');
     if (toggle && navList) {
       toggle.addEventListener('click', () => {
-        navList.classList.toggle('open');
+        const isOpen = navList.classList.toggle('open');
         toggle.classList.toggle('open');
+        document.body.classList.toggle('nav-open', isOpen);
+        document.body.style.overflow = isOpen ? 'hidden' : '';
+      });
+
+      // Close nav when any nav link is clicked
+      navList.querySelectorAll('li a').forEach(link => {
+        link.addEventListener('click', () => {
+          navList.classList.remove('open');
+          toggle.classList.remove('open');
+          document.body.classList.remove('nav-open');
+          document.body.style.overflow = '';
+        });
       });
     }
 
@@ -309,6 +321,19 @@ Submitted from hezacoordination.com`;
       entries.forEach(en => { if (en.isIntersecting) en.target.classList.add('visible'); });
     }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
     document.querySelectorAll('.fade-in').forEach(el => io.observe(el));
+
+
+    /* ──────────────────────────────────────────
+       FLIP CARDS — touch toggle for mobile
+    ────────────────────────────────────────── */
+    document.querySelectorAll('.flip-card').forEach(card => {
+      card.addEventListener('click', () => {
+        // Only intercept on touch/no-hover devices
+        if (window.matchMedia('(hover: none)').matches) {
+          card.classList.toggle('flipped');
+        }
+      });
+    });
 
 
     /* ──────────────────────────────────────────
