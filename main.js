@@ -91,7 +91,7 @@
           <div class="success-icon">✓</div>
           <h3>You're All Set!</h3>
           <p>Click below to open your email client with a pre-filled message. We look forward to supporting your transition.</p>
-          <p style="margin-top:12px; font-size:0.82rem; color:#94a3b8;">If your email client doesn't open, please email us directly at<br><strong>info@hezacoordination.com</strong></p>
+          <p style="margin-top:12px; font-size:0.82rem; color:#94a3b8;">If your email client doesn't open, please email us directly at<br><strong>info@hezacoordination.ca</strong></p>
         </div>
       </div>
     </div>
@@ -256,7 +256,7 @@ ${msg}
 Submitted from hezacoordination.com`;
 
       window.location.href =
-        `mailto:info@hezacoordination.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        `mailto:info@hezacoordination.ca?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     }
 
 
